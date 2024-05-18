@@ -1,0 +1,117 @@
+// This is your Prisma schema file, learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Attributes: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#attributes
+// Attributes functions: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#attribute-functions
+// Relations: https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+// Scalar types: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#model-field-scalar-types
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb" 
+  url      = env("DB_URL")
+}
+
+model Security {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  credential    String    @unique
+  code          String?
+  codeExpiresIn DateTime?
+  validated     Boolean   @default(false)
+}
+
+model Permission {
+  id     String      @id @default(auto()) @map("_id") @db.ObjectId
+  title  Permissions @unique
+}
+
+model Admin {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  role          AccountRole   @default(admin)
+  name          String
+  email         String        @unique
+  password      String
+  status        AccountStatus
+  imageUrl      String?
+  code          String?
+  codeExpiresIn DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Videos {
+  id            String   @id @map("_id") @default(auto()) @db.ObjectId
+  views         Int      @default(0)
+  url           String
+  name          String
+  authorId      Int
+  description   String
+  likes         Int      @default(0)
+  dislikes      Int      @default(0)
+  thumbnailUrl  String
+  tabs          String[]
+  comments      Comment[]
+}
+
+model User {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  role          AccountRole   @default(user)
+  name          String
+  email         String        @unique
+  password      String
+  status        AccountStatus
+  imageUrl      String?
+  bornDate      String?
+  cellphone     String?
+  code          String?
+  codeExpiresIn DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Faq {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Text {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  type      TextType
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum Permissions {
+  configuracoes
+  faqs
+  textos
+}
+
+enum AccountRole {
+  admin
+  user
+}
+
+enum AccountStatus {
+  ativo
+  inativo
+  pendente
+}
+
+enum TextType {
+  about
+  privacy
+  terms
+}
+
+
+type Comment {
+  name String
+  time String
+  comment String
+}
