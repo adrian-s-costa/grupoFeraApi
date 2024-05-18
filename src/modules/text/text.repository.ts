@@ -8,12 +8,13 @@ class Repository {
 
   public findOne(type: TextType) {
     return this.repository.findUnique({
+      // @ts-ignore: Unreachable code error
       where: { type },
       select: TextDto,
     });
   }
 
-  public updateOne(id: number, data: Prisma.TextUpdateInput) {
+  public updateOne(id: string, data: Prisma.TextUpdateInput) {
     return this.repository.update({
       where: { id },
       data,

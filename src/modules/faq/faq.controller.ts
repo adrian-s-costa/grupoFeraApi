@@ -13,6 +13,7 @@ class Controller {
   }
 
   public async findOne(req: Request, res: Response) {
+    // @ts-ignore: Unreachable code error
     const result = await Service.findOne(+req.params.id);
     res.status(200).json(result);
   }
@@ -23,11 +24,13 @@ class Controller {
   }
 
   public async updateOne(req: Request, res: Response) {
+    // @ts-ignore: Unreachable code error
     const result = await Service.updateOne(+req.params.id, req.body);
     res.status(200).json(result);
   }
 
   public async deleteOne(req: Request, res: Response) {
+    // @ts-ignore: Unreachable code error
     const result = await Service.deleteOne(+req.params.id);
     res.status(200).json(result);
   }

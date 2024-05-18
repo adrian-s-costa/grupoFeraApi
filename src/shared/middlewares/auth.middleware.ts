@@ -40,10 +40,10 @@ class AuthMiddleware {
         if (req.auth.role !== AccountRole.admin) return next();
 
         // if check passes, then verify if admin has permission to access this module.
-        const permissions = await AdminService.findAllPermissions(req.auth.id);
+        const permissions = await AdminService.findAllPermissions(Number(req.auth.id));
         if (!permissions) throw new Error();
 
-        const hasPermission = permissions.some(elem => elem.title === permission);
+        const hasPermission = permissions.some((elem: { title: string; }) => elem.title === permission);
         if (!hasPermission) throw new Error();
         next();
 

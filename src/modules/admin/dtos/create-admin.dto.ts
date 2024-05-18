@@ -6,7 +6,7 @@ export const CreateAdmin = z.object({
   email: z.string().trim().email(),
   imageUrl: z.string().trim().url().optional(),
   permissions: z.array(
-    z.number().positive().int(),
+    z.string(),
   )
   .min(1).transform(ids => ids.map((id) => {
     return { id };

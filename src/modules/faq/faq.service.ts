@@ -18,7 +18,7 @@ class Service {
     return await Repository.findAllNoPagination(search);
   }
 
-  public async findOne(id: number) {
+  public async findOne(id: string) {
     const faq = await Repository.findOne(id);
 
     if (!faq) {
@@ -31,13 +31,13 @@ class Service {
     return await Repository.createOne(data);
   }
 
-  public async updateOne(id: number, data: UpdateFaqDto) {
+  public async updateOne(id: string, data: UpdateFaqDto) {
     const faq = await this.findOne(id);
 
     return await Repository.updateOne(faq.id, data);
   }
 
-  public async deleteOne(id: number) {
+  public async deleteOne(id: string) {
     const faq = await this.findOne(id);
 
     return await Repository.deleteOne(faq.id);

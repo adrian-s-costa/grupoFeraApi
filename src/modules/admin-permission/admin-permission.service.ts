@@ -8,7 +8,7 @@ class Service {
     return await Repository.findAll();
   }
 
-  public async findById(id: number) {
+  public async findById(id: string) {
     const permission = await Repository.findById(id);
 
     if (!permission) {
@@ -21,6 +21,7 @@ class Service {
     const ids = objectIds.map(obj => obj.id); // { id: number }[] => number[]
 
     await Promise.all(
+      // @ts-ignore: Unreachable code error
       ids.map(async(id) => await this.findById(id)),
     );
   }

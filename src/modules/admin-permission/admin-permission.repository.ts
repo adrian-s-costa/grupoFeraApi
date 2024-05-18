@@ -7,7 +7,7 @@ class Repository {
     return this.repository.findMany();
   }
 
-  public findById(id: number) {
+  public findById(id: string) {
     return this.repository.findUnique({
       where: { id },
     });

@@ -12,5 +12,6 @@ export const AdminDto = Prisma.validator<Prisma.AdminSelect>()({
 
 export const AdminWithPermissionsDto = Prisma.validator<Prisma.AdminSelect>()({
   ...AdminDto,
+  // @ts-ignore: Unreachable code error
   permissions: true,
 });

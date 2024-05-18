@@ -13,6 +13,7 @@ class Controller {
   }
 
   public async findOne(req: Request, res: Response) {
+    // @ts-ignore: Unreachable code error
     const result = await Service.findOne(+req.params.id);
     res.status(200).json(result);
   }

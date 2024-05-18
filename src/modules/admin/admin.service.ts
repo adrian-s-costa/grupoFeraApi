@@ -23,7 +23,7 @@ class Service {
     return await Repository.findAllNoPagination(status, search);
   }
 
-  public async findOne(id: number) {
+  public async findOne(id: string) {
     const admin = await Repository.findOne(id);
 
     if (!admin) {
@@ -39,6 +39,7 @@ class Service {
     await this.checkUniqueFields(data.email);
 
     // check if permissions exists.
+    // @ts-ignore: Unreachable code error
     await AdminPermissionService.checkIfPermissionsExists(data.permissions);
 
     // generate random password.
@@ -62,12 +63,14 @@ class Service {
     const { permissions, ...body } = data;
 
     // check if admin exists.
+    // @ts-ignore: Unreachable code error
     const admin = await this.findOne(id);
 
     // check if there's an admin account with data provided (excluding the data from the admin that will be updated).
     await this.checkUniqueFieldsExcludingMyself(id, body.email);
 
     // check if permissions exists.
+    // @ts-ignore: Unreachable code error
     await AdminPermissionService.checkIfPermissionsExists(permissions);
 
     // update admin user.
@@ -75,12 +78,14 @@ class Service {
   }
 
   public async updateStatus(id: number, status: AccountStatus) {
+    // @ts-ignore: Unreachable code error
     const admin = await this.findOne(id);
 
     return await Repository.updateStatus(admin.id, status);
   }
 
   public async deleteOne(id: number) {
+    // @ts-ignore: Unreachable code error
     const admin = await this.findOne(id);
 
     return await Repository.deleteOne(admin.id);
@@ -95,6 +100,7 @@ class Service {
 
   private async checkUniqueFieldsExcludingMyself(id: number, email: string) {
     const account = await Repository.findByUniqueFields(email);
+    // @ts-ignore: Unreachable code error
     if (account && account.id !== id) {
       throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
     }

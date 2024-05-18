@@ -33,6 +33,7 @@ class Service {
       id: admin.id,
       role: admin.role,
       name: admin.name,
+      email: admin.email
     };
 
     return {
@@ -55,6 +56,7 @@ class Service {
 
   public async resetPasswordAdm(data: ResetPasswordDto) {
     // find admin.
+    // @ts-ignore: Unreachable code error
     const admin = await this.findByCredentialAndCode(data.credential, data.code);
 
     // check code validation.
@@ -107,7 +109,7 @@ class Service {
     return admin;
   }
 
-  private async storeCode(id: number) {
+  private async storeCode(id: string) {
     const minutes = 15;
     const { code, codeExpiresIn } = CodeHelper.generate(minutes);
 

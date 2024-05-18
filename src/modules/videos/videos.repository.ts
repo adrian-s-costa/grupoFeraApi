@@ -2,7 +2,6 @@
 import DataSource from '@database/data-source';
 
 import { Prisma } from '@prisma/client';
-import { VideosDto } from './dtos/videos.dto';
 
 class Repository {
   constructor(private readonly repository = DataSource.videos) {}

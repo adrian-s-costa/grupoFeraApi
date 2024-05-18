@@ -49,7 +49,7 @@ class Repository {
     });
   }
 
-  public findOne(id: number) {
+  public findOne(id: string) {
     return this.repository.findUnique({
       where: { id },
       select: AdminWithPermissionsDto,
@@ -73,16 +73,13 @@ class Repository {
     return this.repository.create({
       data: {
         ...data,
-        permissions: {
-          connect: permissions,
-        },
       },
       select: AdminWithPermissionsDto,
     });
   }
 
   public updateOne(
-    id: number,
+    id: string,
     data: Prisma.AdminUpdateInput,
     permissions?: Prisma.PermissionWhereUniqueInput[],
   ) {
@@ -92,7 +89,7 @@ class Repository {
         await tx.admin.update({
           where: { id },
           data: {
-            permissions: { set: [] },
+  
           },
         });
       }
@@ -102,16 +99,13 @@ class Repository {
         where: { id },
         data: {
           ...data,
-          permissions: {
-            connect: permissions,
-          },
         },
         select: AdminWithPermissionsDto,
       });
     });
   }
 
-  public updateStatus(id: number, status: AccountStatus) {
+  public updateStatus(id: string, status: AccountStatus) {
     return this.repository.update({
       where: { id },
       data: { status },
@@ -119,7 +113,7 @@ class Repository {
     });
   }
 
-  public deleteOne(id: number) {
+  public deleteOne(id: string) {
     return this.repository.delete({
       where: { id },
       select: AdminDto,

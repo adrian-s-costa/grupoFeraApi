@@ -49,7 +49,7 @@ class Repository {
     });
   }
 
-  public findOne(id: number) {
+  public findOne(id: string) {
     return this.repository.findUnique({
       where: { id },
       select: FaqDto,
@@ -63,7 +63,7 @@ class Repository {
     });
   }
 
-  public updateOne(id: number, data: Prisma.FaqUpdateInput) {
+  public updateOne(id: string, data: Prisma.FaqUpdateInput) {
     return this.repository.update({
       where: { id },
       data,
@@ -71,7 +71,7 @@ class Repository {
     });
   }
 
-  public deleteOne(id: number) {
+  public deleteOne(id: string) {
     return this.repository.delete({
       where: { id },
       select: FaqDto,

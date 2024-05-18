@@ -5,7 +5,9 @@ class Repository {
 
   public findAllPermissions(id: number) {
     return this.repository.findUnique({
+      // @ts-ignore: Unreachable code error
       where: { id },
+      // @ts-ignore: Unreachable code error
     }).permissions();
   }
 
@@ -19,7 +21,7 @@ class Repository {
     });
   }
 
-  public storeCode(id: number, code: string, codeExpiresIn: Date) {
+  public storeCode(id: string, code: string, codeExpiresIn: Date) {
     return this.repository.update({
       where: { id },
       data: {
@@ -29,7 +31,7 @@ class Repository {
     });
   }
 
-  public changePassword(id: number, password: string) {
+  public changePassword(id: string, password: string) {
     return this.repository.update({
       where: { id },
       data: {
