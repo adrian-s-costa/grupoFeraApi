@@ -1,7 +1,7 @@
 
 import DataSource from '@database/data-source';
-
 import { Prisma } from '@prisma/client';
+import { db, objectId } from '../../database/mongo'
 
 class Repository {
   constructor(private readonly repository = DataSource.videos) {}
@@ -14,34 +14,67 @@ class Repository {
         where,
         take: size,
         skip: ((page - 1) * size),
-      
+        include: {
+          comments: {
+            include: {
+              answers: true
+            }
+          }
+        }
+        
       }),
+      
       this.repository.count({ where }),
     ]);
   }
 
-  public findAllNoPagination(search?: string) {
+  public async findAllNoPagination(search?: string) {
     const where: Prisma.VideosWhereInput = {};
 
     return this.repository.findMany({
       where,
-    
+      include: {
+        comments: {
+          include: {
+            answers: true,
+          }
+        }
+      }
     });
   }
 
   public findOne(id: string) {
     return this.repository.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        comments: {
+          include: {
+            answers: true
+          }
+        } 
+      }
+      
     });
   }
 
   public postComment(id: string, comment: any) {
-    return this.repository.update({
-      where: { id },
+    return DataSource.comment.create({
       data: {
-        comments: {
-          push: comment,
-        },
+        videoId: id,
+        comment: comment.comment,
+        time: comment.time,
+        name: comment.name
+      },
+    });
+  }
+
+  public postAnswer(id: string, answer: any) {
+    return DataSource.answer.create({
+      data: {
+        commentId: id,
+        answer: answer.answer,
+        time: answer.time,
+        name: answer.name
       },
     });
   }
@@ -109,6 +142,36 @@ class Repository {
       where: { id },
     
     });
+  }
+
+  public findAllCategories() {
+    return DataSource.categoryVideos.findMany()
+  }
+
+  public getHomeCategories() {
+    return DataSource.categoryHome.findMany()
+  }
+
+  public getCampaigns() {
+    return DataSource.campaigns.findMany()
+  }
+
+  public getOneCampaign(id: any){
+    return DataSource.campaigns.findUnique({
+      where: { id }
+    })
+  }
+
+  public getCategoryContent(filter: string) {
+    return DataSource.categoryHomeContent.findMany({
+      where: { filter }
+    })
+  }
+
+  public getOneCategoryContent(id: any){
+    return DataSource.categoryHomeContent.findUnique({
+      where: { id }
+    })
   }
 }
 

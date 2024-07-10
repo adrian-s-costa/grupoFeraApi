@@ -13,6 +13,10 @@ class Service {
     return await Mail.sendEmail(email, 'Grupo Fera - Esqueceu sua senha?', 'forgot-password', content);
   }
 
+  public async sendRegisterPasswordEmail(email: string, content: IForgotPasswordEmail) {
+    return await Mail.sendEmail(email, 'Grupo Fera - Registro - Código de Acesso', 'register', content);
+  }
+
   public async sendNewAdminAccountEmail(email: string, content: INewAdminAccountEmail) {
     return await Mail.sendEmail(email, '[[name]] - Aqui está sua senha de acesso!', 'new-admin-user', content);
   }

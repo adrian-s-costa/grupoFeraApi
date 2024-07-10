@@ -17,8 +17,28 @@ class Controller {
     res.status(200).json(result);
   }
 
+  public async findOneCampaign(req: Request, res: Response) {
+    const result = await Service.getOneCampaign(req.params.id);
+    res.status(200).json(result);
+  }
+
+  public async findCategoryContent(req: Request, res: Response) {
+    const result = await Service.getCategoryContent(req.params.filter);
+    res.status(200).json(result);
+  }
+
+  public async findOneCategoryContent(req: Request, res: Response) {
+    const result = await Service.getOneCategoryContent(req.params.id);
+    res.status(200).json(result);
+  }
+
   public async postComment(req: Request, res: Response) {
     const result = await Service.postComment(req.params.id, req.body);
+    res.status(200).json(result);
+  }
+
+  public async postAnswer(req: Request, res: Response) {
+    const result = await Service.postAnswer(req.params.commentId, req.body);
     res.status(200).json(result);
   }
 
@@ -34,6 +54,21 @@ class Controller {
 
   public async postContact(req: Request, res: Response) {
     const result = await Service.postContact(req.body);
+    return res.status(200).json(result)
+  }
+
+  public async getAllCategories(req: Request, res: Response) {
+    const result = await Service.getAllCategories();
+    return res.status(200).json(result)
+  }
+
+  public async getHomeCategories(req: Request, res: Response) {
+    const result = await Service.getHomeCategories();
+    return res.status(200).json(result)
+  }
+
+  public async getCampaigns(req: Request, res: Response) {
+    const result = await Service.getCampaigns();
     return res.status(200).json(result)
   }
 

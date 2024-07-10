@@ -42,6 +42,7 @@ class Service {
   public async forgotPasswordUser(data: ForgotPasswordDto) {
     let user = null;
     const defaultPassword = '2#%%sdlkfjslf@@#%68646654879321400dfsgdhaçovmezxx4445'
+    let typeOfEmail = 'sendForgotPasswordEmail'
     const register: Prisma.UserCreateInput = {
       role: AccountRole.user,
       name: 'Sem Nome',
@@ -51,6 +52,7 @@ class Service {
     };
 
     if (data.register) {
+      typeOfEmail = 'sendRegisterPasswordEmail'
       user = await this.findByCredentialRegister(data.credential);
 
       if(!user || user == null){ 
@@ -70,9 +72,13 @@ class Service {
     user = await this.findByCredential(data.credential);
     const { code, minutes } = await this.storeCode(user.email);
     
-    await MailService.sendForgotPasswordEmail(user.email, { code, minutes });
+    if (data.register){
+      await MailService.sendRegisterPasswordEmail(user.email, { code, minutes });
+      return { message: 'Código de registro de conta enviado no seu email!' };
+    }
+
+    await MailService.sendForgotPasswordEmail(user.email, {code, minutes})
     return { message: 'Código de recuperação de senha enviado no seu email!' };
-  
   }
 
   public async checkCode(data: {credential: string, code: string}) {
@@ -92,8 +98,9 @@ class Service {
   }
 
   public async updateUserData(data: { id: string, name: string, secName: string, tel: string, bornDate: string }) {
-    const newUser = await Repository.updateAdditionalInfo(data);
-    return newUser;
+    let newUser = await Repository.updateAdditionalInfo(data);
+    const { password, ...rest } = newUser;
+    return rest;
   }
 
   private checkCodeValidation(codeExpiresIn: Date) {

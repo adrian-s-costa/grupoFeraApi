@@ -51,6 +51,42 @@ class Service {
     return { message: 'Mensagem enviada com sucesso'};
   }
 
+  public async getAllCategories(){
+    const categories = await Repository.findAllCategories();
+    return categories;
+  }
+
+  public async getHomeCategories(){
+    const categories = await Repository.getHomeCategories();
+    return categories;
+  }
+
+  public async getCampaigns(){
+    const categories = await Repository.getCampaigns();
+    return categories;
+  }
+
+  public async getOneCampaign(id: any){
+    const campaign = await Repository.getOneCampaign(id);
+    return campaign;
+  }
+
+  public async getCategoryContent(filter: string){
+    const content = await Repository.getCategoryContent(filter);
+    return content;
+  }
+
+  public async getOneCategoryContent(id: any){
+    const content = await Repository.getOneCategoryContent(id);
+    return content;
+  }
+
+  public async postAnswer(id: any, answer: any){
+    answer.time = dayjs().format('DD/MM/YYYY')
+    const result = await Repository.postAnswer(id, answer);
+    return result;
+  }
+
 
   // public async createOne(data: CreateVideosDto) {
   //   return await Repository.createOne(data);

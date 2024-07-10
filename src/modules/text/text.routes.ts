@@ -3,6 +3,7 @@ import { Router } from 'express';
 import Auth from '@middlewares/auth.middleware';
 import Controller from './text.controller';
 import Validator from './text.validator';
+import videosController from '@modules/videos/videos.controller';
 
 const router = Router();
 
@@ -18,6 +19,44 @@ router
   Auth.authentication, Auth.roles('admin'),
   Validator.updateOne,
   Controller.updateOne,
-);
+)
+
+router
+.route('/categories')
+.get(
+  videosController.getAllCategories
+)
+
+router
+.route('/home/categories')
+.get(
+  videosController.getHomeCategories
+)
+
+router
+.route('/home/campaigns')
+.get(
+  videosController.getCampaigns
+)
+
+router
+.route('/home/campaigns/:id')
+.get(
+  videosController.findOneCampaign
+)
+
+router
+.route('/home/category/:filter')
+.get(
+  videosController.findCategoryContent
+)
+
+router
+.route('/home/category/content/:id')
+.get(
+  videosController.findOneCategoryContent
+)
+
+
 
 export default router;

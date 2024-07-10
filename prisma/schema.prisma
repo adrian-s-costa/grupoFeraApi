@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb" 
+  provider = "mongodb"
   url      = env("DB_URL")
 }
 
@@ -22,8 +22,8 @@ model Security {
 }
 
 model Permission {
-  id     String      @id @default(auto()) @map("_id") @db.ObjectId
-  title  Permissions @unique
+  id    String      @id @default(auto()) @map("_id") @db.ObjectId
+  title Permissions @unique
 }
 
 model Admin {
@@ -40,18 +40,38 @@ model Admin {
   updatedAt     DateTime      @updatedAt
 }
 
-model Videos {
-  id            String   @id @map("_id") @default(auto()) @db.ObjectId
-  views         Int      @default(0)
-  url           String
-  name          String
-  authorId      Int
-  description   String
-  likes         Int      @default(0)
-  dislikes      Int      @default(0)
-  thumbnailUrl  String
-  tabs          String[]
-  comments      Comment[]
+model CategoryHome {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  imgSrc String
+  name   String
+}
+
+model CategoryVideos {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  value String
+}
+
+model Campaigns {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  texto         String
+  title         String
+  price         String
+  imgSrc        String
+  desc          String
+  secondaryImgs SecondaryImgs[]
+}
+
+model CategoryHomeContent {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  texto         String
+  title         String
+  imgSrc        String
+  desc          String
+  secondaryImgs SecondaryImgs[]
+  btnText       String
+  redirectLink  String
+  filter        String
 }
 
 model User {
@@ -71,19 +91,19 @@ model User {
 }
 
 model Faq {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   question  String
   answer    String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Text {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   type      TextType
   content   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Permissions {
@@ -109,9 +129,39 @@ enum TextType {
   terms
 }
 
+model Videos {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  views        Int       @default(0)
+  url          String
+  name         String
+  authorId     Int
+  description  String
+  likes        Int       @default(0)
+  dislikes     Int       @default(0)
+  thumbnailUrl String
+  tags         String[]
+  comments     Comment[]
+}
 
-type Comment {
-  name String
-  time String
+model Comment {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  time    String
   comment String
+  answers Answer[]
+  video   Videos?  @relation(fields: [videoId], references: [id])
+  videoId String?  @db.ObjectId
+}
+
+model Answer {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  answer    String
+  name      String
+  time      String
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId String?  @db.ObjectId
+}
+
+type SecondaryImgs {
+  imgSrc String
 }

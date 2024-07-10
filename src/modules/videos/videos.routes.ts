@@ -56,4 +56,10 @@ router
   Controller.postContact,
 )
 
+router
+.route('/:id/comment/:commentId')
+.post(
+  Controller.postAnswer,
+)
+
 export default router;
