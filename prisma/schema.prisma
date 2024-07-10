@@ -44,6 +44,7 @@ model CategoryHome {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   imgSrc String
   name   String
+  show   Boolean?
 }
 
 model CategoryVideos {
