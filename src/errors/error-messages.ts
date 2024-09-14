@@ -8,6 +8,7 @@ export default {
   ACCOUNT_ALREADY_EXISTS: 'Já existe uma conta com os dados informados.',
   EMAIL_NOT_VALIDATED: 'Para continuar, é necessário validar o email.',
   INVALID_CREDENTIALS: 'Credenciais incorretas.',
+  USER_NOT_EXIST: 'Não há usuário cadastrado com essas informações',
   ACCOUNT_ALREADY_ACTIVE: 'A conta com o email informado já foi ativada',
 
   ADMIN_NOT_FOUND: 'Usuário não encontrado na base de dados.',

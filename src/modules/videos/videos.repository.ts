@@ -1,7 +1,6 @@
 
 import DataSource from '@database/data-source';
 import { Prisma } from '@prisma/client';
-import { db, objectId } from '../../database/mongo'
 
 class Repository {
   constructor(private readonly repository = DataSource.videos) {}

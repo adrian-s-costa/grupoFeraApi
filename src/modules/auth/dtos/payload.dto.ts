@@ -6,4 +6,7 @@ export interface IPayloadDto {
   name: string;
   email: string;
   cellphone?: string;
+  cep?: string;
+  localidade?: string;
+  uf?: string;
 }

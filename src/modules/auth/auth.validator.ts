@@ -36,7 +36,11 @@ class Validator extends BaseValidator {
       name: z.string().min(1),
       secName: z.string().min(1),
       tel: z.string().min(9),
-      bornDate: z.string().min(1)
+      bornDate: z.string().min(1),
+      cep: z.string().min(8),
+      localidade: z.string().min(1),
+      uf: z.string().min(1),
+      pfpUrl: z.string().nullable()
     }));
   };
 }

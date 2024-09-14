@@ -26,13 +26,17 @@ class Repository {
     });
   }
 
-  public updateAdditionalInfo(info: { id: string, name: string, secName: string, tel: string, bornDate: string }) {
+  public updateAdditionalInfo(info: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string }) {
     return this.repository.update({
       where: { id: info.id },
       data: {
         name: info.name + ' ' + info.secName,
         cellphone: info.tel,
         bornDate: info.bornDate,
+        cep: info.cep,
+        localidade: info.localidade,
+        uf: info.uf,
+        pfpUrl: info.pfpUrl
       },
     });
   }

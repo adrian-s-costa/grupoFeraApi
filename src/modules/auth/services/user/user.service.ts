@@ -31,6 +31,9 @@ class Service {
       name: user.name,
       email: user.email,
       cellphone: user.cellphone!,
+      cep: user.cep!,
+      localidade: user.localidade!,
+      uf: user.uf!
     };
 
     return {
@@ -97,7 +100,7 @@ class Service {
     return { message: 'Senha atualizada com sucesso!' };
   }
 
-  public async updateUserData(data: { id: string, name: string, secName: string, tel: string, bornDate: string }) {
+  public async updateUserData(data: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string }) {
     let newUser = await Repository.updateAdditionalInfo(data);
     const { password, ...rest } = newUser;
     return rest;
@@ -122,7 +125,7 @@ class Service {
   private comparePasswords(password: string, hash: string) {
     const isMatch = PasswordHelper.comparePasswordAndHash(password, hash);
     if (!isMatch) {
-      throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+      throw new AppException(400, ErrorMessages.INVALID_PASSWORD);
     }
     return isMatch;
   }
@@ -131,7 +134,7 @@ class Service {
     const user = await Repository.findByCredential(credential);
 
     if (!user) {
-      throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+      throw new AppException(400, ErrorMessages.USER_NOT_EXIST);
     }
     return user;
   }

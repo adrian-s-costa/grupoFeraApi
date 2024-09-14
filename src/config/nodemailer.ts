@@ -10,6 +10,6 @@ export default {
     rejectUnauthorized: false,
   },
   default: {
-    from: `Grupo Fera <noreply@grupofera.app.br>`,
+    from: `Grupo Fera <fera@grupofera.app.br>`,
   },
 };
