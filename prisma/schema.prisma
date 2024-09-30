@@ -157,6 +157,7 @@ model Comment {
   answers Answer[]
   video   Videos?  @relation(fields: [videoId], references: [id])
   videoId String?  @db.ObjectId
+  pfpUrl  String?
 }
 
 model Answer {
@@ -166,6 +167,7 @@ model Answer {
   time      String
   comment   Comment? @relation(fields: [commentId], references: [id])
   commentId String?  @db.ObjectId
+  pfpUrl    String?
 }
 
 type SecondaryImgs {

@@ -19,6 +19,7 @@ class Validator extends BaseValidator {
       name: z.string().min(1),
       time: z.string().min(1),
       comment: z.string().min(1),
+      pfpUrl: z.string().nullable(),
     }));
   };
 }

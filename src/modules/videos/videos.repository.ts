@@ -62,7 +62,8 @@ class Repository {
         videoId: id,
         comment: comment.comment,
         time: comment.time,
-        name: comment.name
+        name: comment.name,
+        pfpUrl: comment.pfpUrl
       },
     });
   }
@@ -73,7 +74,8 @@ class Repository {
         commentId: id,
         answer: answer.answer,
         time: answer.time,
-        name: answer.name
+        name: answer.name,
+        pfpUrl: answer.pfpUrl
       },
     });
   }
