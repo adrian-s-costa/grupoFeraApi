@@ -32,6 +32,11 @@ class Controller {
     res.status(200).json(result);
   }
 
+  public async findOneCategoryContentByUserId(req: Request, res: Response) {
+    const result = await Service.getOneCategoryContentByUserId(req.params.id);
+    res.status(200).json(result);
+  }
+
   public async postComment(req: Request, res: Response) {
     const result = await Service.postComment(req.params.id, req.body);
     res.status(200).json(result);
@@ -49,6 +54,11 @@ class Controller {
 
   public async postView(req: Request, res: Response) {
     const result = await Service.postView(req.params.id);
+    res.status(200).json(result);
+  }
+
+  public async postViewCampaign(req: Request, res: Response) {
+    const result = await Service.postViewCampaign(req.params.id);
     res.status(200).json(result);
   }
 

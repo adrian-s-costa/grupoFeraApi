@@ -57,6 +57,12 @@ router
   videosController.findOneCategoryContent
 )
 
+router
+.route('/home/category/content/:id/dashboard')
+.get(
+  videosController.findOneCategoryContentByUserId
+)
+
 
 
 export default router;

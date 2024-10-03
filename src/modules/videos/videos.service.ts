@@ -46,6 +46,11 @@ class Service {
     return view;
   }
 
+  public async postViewCampaign(id: string) {
+    const view = await Repository.postViewCampaign(id)
+    return view;
+  }
+
   public async postContact(userData: any) {
     await MailService.sendContactEmail(userData);
     return { message: 'Mensagem enviada com sucesso'};
@@ -78,6 +83,11 @@ class Service {
 
   public async getOneCategoryContent(id: any){
     const content = await Repository.getOneCategoryContent(id);
+    return content;
+  }
+
+  public async getOneCategoryContentByUserId(userId: any){
+    const content = await Repository.getOneCategoryContentByUserId(userId);
     return content;
   }
 

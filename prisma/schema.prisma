@@ -74,6 +74,9 @@ model CategoryHomeContent {
   btnText       String
   redirectLink  String
   filter        String
+  user          User?      @relation(fields: [userId], references: [id])
+  userId        String?    
+  views         Int       @default(0)
 }
 
 model User {
@@ -94,6 +97,8 @@ model User {
   codeExpiresIn DateTime?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  categoryHomeContent CategoryHomeContent[] 
+
 }
 
 model Faq {

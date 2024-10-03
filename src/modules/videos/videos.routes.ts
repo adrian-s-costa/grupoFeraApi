@@ -51,6 +51,12 @@ router
 )
 
 router
+.route('/:id/campaign/view')
+.post(
+  Controller.postViewCampaign,
+)
+
+router
 .route('/:id/contact')
 .post(
   Controller.postContact,

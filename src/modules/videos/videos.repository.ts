@@ -121,7 +121,27 @@ class Repository {
       },
     });
   }
+
+
+  public async postViewCampaign(id: string) {
+    const post = await DataSource.categoryHomeContent.findUnique({
+      where: { id },
+      select: { views: true },
+    });
   
+    if (!post) {
+      throw new Error('Campaign not found');
+    }
+  
+    const updatedViews = post.views! + 1;
+  
+    return DataSource.categoryHomeContent.update({
+      where: { id },
+      data: {
+        views: updatedViews,
+      },
+    });
+  }
 
   public createOne(data: Prisma.VideosCreateInput) {
     return this.repository.create({
@@ -174,6 +194,13 @@ class Repository {
       where: { id }
     })
   }
+
+  public getOneCategoryContentByUserId(userId: string) {
+    return DataSource.categoryHomeContent.findMany({
+      where: { userId }
+    })
+  }
+
 }
 
 export default new Repository();

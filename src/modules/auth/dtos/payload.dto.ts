@@ -9,4 +9,5 @@ export interface IPayloadDto {
   cep?: string;
   localidade?: string;
   uf?: string;
+  pfpUrl?: string;
 }

@@ -33,7 +33,8 @@ class Service {
       cellphone: user.cellphone!,
       cep: user.cep!,
       localidade: user.localidade!,
-      uf: user.uf!
+      uf: user.uf!,
+      pfpUrl: user.pfpUrl!
     };
 
     return {
