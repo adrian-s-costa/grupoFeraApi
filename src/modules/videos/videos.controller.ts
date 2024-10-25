@@ -62,6 +62,11 @@ class Controller {
     res.status(200).json(result);
   }
 
+  public async postClickCampaign(req: Request, res: Response) {
+    const result = await Service.postClickCampaign(req.params.id);
+    res.status(200).json(result);
+  }
+
   public async postContact(req: Request, res: Response) {
     const result = await Service.postContact(req.body);
     return res.status(200).json(result)

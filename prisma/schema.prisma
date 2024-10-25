@@ -75,8 +75,11 @@ model CategoryHomeContent {
   redirectLink  String
   filter        String
   user          User?      @relation(fields: [userId], references: [id])
+  viewInfos     ViewCompaign[]
+  clickInfos    ClickCompaign[]
   userId        String?    
   views         Int       @default(0)
+  clicks        Int       @default(0)
 }
 
 model User {
@@ -163,6 +166,22 @@ model Comment {
   video   Videos?  @relation(fields: [videoId], references: [id])
   videoId String?  @db.ObjectId
   pfpUrl  String?
+}
+
+model ViewCompaign {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  view    Int
+  time    DateTime
+  campaign   CategoryHomeContent?  @relation(fields: [campaignId], references: [id])
+  campaignId String?  @db.ObjectId
+}
+
+model ClickCompaign {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  click    Int
+  time    DateTime
+  campaign   CategoryHomeContent?  @relation(fields: [campaignId], references: [id])
+  campaignId String?  @db.ObjectId
 }
 
 model Answer {

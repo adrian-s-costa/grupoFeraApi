@@ -123,7 +123,7 @@ class Repository {
   }
 
 
-  public async postViewCampaign(id: string) {
+  public async postViewCampaign(id: string, time: Date) {
     const post = await DataSource.categoryHomeContent.findUnique({
       where: { id },
       select: { views: true },
@@ -132,6 +132,14 @@ class Repository {
     if (!post) {
       throw new Error('Campaign not found');
     }
+
+    await DataSource.viewCompaign.create({
+      data: {
+        campaignId: id,
+        view: 1,
+        time: time,
+      },
+    });
   
     const updatedViews = post.views! + 1;
   
@@ -139,6 +147,34 @@ class Repository {
       where: { id },
       data: {
         views: updatedViews,
+      },
+    });
+  }
+
+  public async postClickCampaign(id: string, time: Date) {
+    const post = await DataSource.categoryHomeContent.findUnique({
+      where: { id },
+      select: { clicks: true },
+    });
+  
+    if (!post) {
+      throw new Error('Campaign not found');
+    }
+
+    await DataSource.clickCompaign.create({
+      data: {
+        campaignId: id,
+        click: 1,
+        time: time,
+      },
+    });
+  
+    const updatedClicks = post.clicks! + 1;
+  
+    return DataSource.categoryHomeContent.update({
+      where: { id },
+      data: {
+        clicks: updatedClicks,
       },
     });
   }
@@ -191,8 +227,34 @@ class Repository {
 
   public getOneCategoryContent(id: any){
     return DataSource.categoryHomeContent.findUnique({
-      where: { id }
+      where: { id },
+      include: { 
+        viewInfos: true
+      }
     })
+  }
+
+  public async getViewOrClickCountByDateRange(id: any, objName: string, startDate: Date, endDate: Date) {
+    const categoryContent = await DataSource.categoryHomeContent.findUnique({
+      where: { id },
+      include: { 
+        [objName]: {
+          where: {
+            time: {
+              gte: startDate,
+              lte: endDate,
+            },
+          },
+        },
+      },
+    });
+    
+    console.log(categoryContent?.[objName].length)
+
+    // Contar as views
+    const count = categoryContent?.[objName].length || 0;
+  
+    return count;
   }
 
   public getOneCategoryContentByUserId(userId: string) {

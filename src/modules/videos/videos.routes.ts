@@ -57,6 +57,12 @@ router
 )
 
 router
+.route('/:id/campaign/click')
+.post(
+  Controller.postClickCampaign,
+)
+
+router
 .route('/:id/contact')
 .post(
   Controller.postContact,

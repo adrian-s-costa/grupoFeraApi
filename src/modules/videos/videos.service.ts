@@ -47,8 +47,15 @@ class Service {
   }
 
   public async postViewCampaign(id: string) {
-    const view = await Repository.postViewCampaign(id)
+    const currentDate = dayjs().toDate()
+    const view = await Repository.postViewCampaign(id, currentDate)
     return view;
+  }
+
+  public async postClickCampaign(id: string) {
+    const currentDate = dayjs().toDate()
+    const click = await Repository.postClickCampaign(id, currentDate)
+    return click;
   }
 
   public async postContact(userData: any) {
@@ -81,9 +88,144 @@ class Service {
     return content;
   }
 
-  public async getOneCategoryContent(id: any){
+  public async getOneCategoryContent(id: any) {
     const content = await Repository.getOneCategoryContent(id);
-    return content;
+  
+    const currentDate = dayjs();
+
+    const startOfCurrentDay = currentDate.startOf('day').toDate();
+    const endOfCurrentDay = currentDate.endOf('day').toDate();
+    const startOflastDay = currentDate.subtract(1, 'day').toDate();
+    const endOfLastDay = currentDate.subtract(1, 'day').endOf('day').toDate()
+
+    // Intervalos de semanas
+    const startOfCurrentWeek = currentDate.startOf('week').toDate(); // Início da semana atual
+    const endOfCurrentWeek = currentDate.endOf('week').toDate(); // Fim da semana atual
+    const startOfLastWeek = currentDate.subtract(1, 'week').startOf('week').toDate(); // Início da semana passada
+    const endOfLastWeek = currentDate.subtract(1, 'week').endOf('week').toDate(); // Fim da semana passada
+  
+    // Intervalos de meses
+    const startOfCurrentMonth = currentDate.startOf('month').toDate(); // Início do mês atual
+    const endOfCurrentMonth = currentDate.endOf('month').toDate(); // Fim do mês atual
+    const startOfLastMonth = currentDate.subtract(1, 'month').startOf('month').toDate(); // Início do mês passado
+    const endOfLastMonth = currentDate.subtract(1, 'month').endOf('month').toDate(); // Fim do mês passado
+  
+    // Intervalos de anos
+    const startOfCurrentYear = currentDate.startOf('year').toDate(); // Início do ano atual
+    const endOfCurrentYear = currentDate.endOf('year').toDate(); // Fim do ano atual
+    const startOfLastYear = currentDate.subtract(1, 'year').startOf('year').toDate(); // Início do ano passado
+    const endOfLastYear = currentDate.subtract(1, 'year').endOf('year').toDate(); // Fim do ano passado
+  
+    // Contagem de views
+    const lastDayCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOflastDay, endOfLastDay);
+    const currentDayCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfCurrentDay, endOfCurrentDay);
+
+    const lastWeekCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfLastWeek, endOfLastWeek);
+    const currentWeekCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfCurrentWeek, endOfCurrentWeek);
+    
+    const lastMonthCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfLastMonth, endOfLastMonth);
+    const currentMonthCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfCurrentMonth, endOfCurrentMonth);
+  
+    const lastYearCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfLastYear, endOfLastYear);
+    const currentYearCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', startOfCurrentYear, endOfCurrentYear);
+
+    const dayChangePercentage = this.calculatePercentageChange(lastDayCount, currentDayCount).toFixed(1);
+    const weekChangePercentage = this.calculatePercentageChange(lastWeekCount, currentWeekCount).toFixed(1);
+    const monthChangePercentage = this.calculatePercentageChange(lastMonthCount, currentMonthCount).toFixed(1);
+    const yearChangePercentage = this.calculatePercentageChange(lastYearCount, currentYearCount).toFixed(1);
+
+    // Contagem de clicks
+    const clickLastDayCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOflastDay, endOfLastDay);
+    const clickCurrentDayCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfCurrentDay, endOfCurrentDay);
+
+    const clickLastWeekCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfLastWeek, endOfLastWeek);
+    const clickCurrentWeekCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfCurrentWeek, endOfCurrentWeek);
+    
+    const clickLastMonthCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfLastMonth, endOfLastMonth);
+    const clickCurrentMonthCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfCurrentMonth, endOfCurrentMonth);
+  
+    const clickLastYearCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfLastYear, endOfLastYear);
+    const clickCurrentYearCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', startOfCurrentYear, endOfCurrentYear);
+
+    const dayChangeClick = this.calculatePercentageChange(clickLastDayCount, clickCurrentDayCount).toFixed(1);
+    const weekChangeClick = this.calculatePercentageChange(clickLastWeekCount, clickCurrentWeekCount).toFixed(1);
+    const monthChangeClick = this.calculatePercentageChange(clickLastMonthCount, clickCurrentMonthCount).toFixed(1);
+    const yearChangeClick = this.calculatePercentageChange(clickLastYearCount, clickCurrentYearCount).toFixed(1);
+
+    //CTR
+    const lastDayCTR = this.calculateCTR(lastDayCount, clickLastDayCount);
+    const currentDayCTR = this.calculateCTR(currentDayCount, clickCurrentDayCount);  
+
+    const lastWeekCTR = this.calculateCTR(lastWeekCount, clickLastWeekCount);
+    const currentWeekCTR = this.calculateCTR(currentWeekCount, clickCurrentWeekCount);
+    
+    const lastMonthCTR = this.calculateCTR(lastMonthCount, clickLastMonthCount);
+    const currentMonthCTR = this.calculateCTR(currentMonthCount, clickCurrentMonthCount);
+    
+    const lastYearCTR = this.calculateCTR(lastYearCount, clickLastYearCount);
+    const currentYearCTR = this.calculateCTR(currentYearCount, clickCurrentYearCount);
+
+    const dayChangeCTR = this.calculatePercentageChange(lastDayCTR, currentDayCTR).toFixed(1);
+    const weekChangeCTR = this.calculatePercentageChange(lastWeekCTR, currentWeekCTR).toFixed(1);
+    const monthChangeCTR = this.calculatePercentageChange(lastMonthCTR, currentMonthCTR).toFixed(1);
+    const yearChangeCTR = this.calculatePercentageChange(lastYearCTR, currentYearCTR).toFixed(1);
+
+    console.log(currentDayCTR, currentMonthCTR, currentWeekCTR, currentYearCTR);
+    
+    return {
+      ...content,
+      measures: {
+        day: {
+          dayChangePercentage,
+          dayChangeClick,
+          currentDayCTR,
+          dayChangeCTR
+        },
+        week: {
+          weekChangePercentage,
+          weekChangeClick,
+          currentWeekCTR,
+          weekChangeCTR
+        },
+        month: {
+          monthChangePercentage,
+          monthChangeClick,
+          currentMonthCTR,
+          monthChangeCTR
+        },
+        year: {
+          yearChangePercentage,
+          yearChangeClick,
+          currentYearCTR,
+          yearChangeCTR,
+        }
+      }
+    };
+
+  }
+
+  private calculateCTR(views: number, clicks: number): number {
+    if (views === 0) {
+      return 0;
+    }
+    return (clicks / views) * 100;
+  }
+
+  private calculateCTRChange(oldValue: number, newValue: number): number {
+    if (oldValue === 0) oldValue = 1;
+    const result = ((newValue - oldValue) / oldValue) * 100;
+    return result;
+  }
+
+  private calculatePercentageChange(oldValue: number, newValue: number): number {
+    if (oldValue === 0) oldValue = 1;
+    const result = ((newValue - oldValue) / oldValue) * 100;
+    return result;
+  }
+
+  private calculateCTRPercentageChange(oldValue: number, newValue: number): number {
+    const result = ((newValue - oldValue) / oldValue) * 100;
+    return result;
   }
 
   public async getOneCategoryContentByUserId(userId: any){
