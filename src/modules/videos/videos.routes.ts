@@ -74,4 +74,17 @@ router
   Controller.postAnswer,
 )
 
+router
+.route('/courses')
+.get(
+  Controller.getCourses,
+)
+
+router
+.route('/courses/:id')
+.get(
+  Controller.getCourseById,
+)
+
+
 export default router;

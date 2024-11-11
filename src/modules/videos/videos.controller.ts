@@ -87,6 +87,21 @@ class Controller {
     return res.status(200).json(result)
   }
 
+  public async getCourses(req: Request, res: Response) {
+    const result = await Service.getCourses();
+    return res.status(200).json(result)
+  }
+
+  public async getCourseById(req: Request, res: Response) {
+    const result = await Service.getCoursesById(req.params.id);
+    return res.status(200).json(result)
+  }
+  
+  public async postCourseComment(req: Request, res: Response) {
+    const result = await Service.postCourseComment(req.params.id, req.body);
+    res.status(200).json(result);
+  }
+
   // public async createOne(req: Request, res: Response) {
   //   const result = await Service.createOne(req.body);
   //   res.status(201).json(result);

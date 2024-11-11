@@ -68,6 +68,18 @@ class Repository {
     });
   }
 
+  public postCourseComment(id: string, comment: any) {
+    return DataSource.courseComment.create({
+      data: {
+        courseId: id,
+        comment: comment.comment,
+        time: comment.time,
+        name: comment.name,
+        pfpUrl: comment.pfpUrl
+      },
+    });
+  }
+
   public postAnswer(id: string, answer: any) {
     return DataSource.answer.create({
       data: {
@@ -249,17 +261,28 @@ class Repository {
       },
     });
     
-    console.log(categoryContent?.[objName].length)
-
-    // Contar as views
-    const count = categoryContent?.[objName].length || 0;
-  
+    const count = categoryContent?.[objName].length || 0;  
     return count;
   }
 
   public getOneCategoryContentByUserId(userId: string) {
     return DataSource.categoryHomeContent.findMany({
       where: { userId }
+    })
+  }
+
+  public getCourses() {
+    return DataSource.courses.findMany();
+  }
+
+  public getCourseById(courseId: string) {
+    return DataSource.courses.findUnique({
+      where: { id: courseId },
+      include: {
+        comments: true,
+        modules: true,
+        reviews: true,
+      }
     })
   }
 

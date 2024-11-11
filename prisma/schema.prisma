@@ -77,7 +77,7 @@ model CategoryHomeContent {
   user          User?      @relation(fields: [userId], references: [id])
   viewInfos     ViewCompaign[]
   clickInfos    ClickCompaign[]
-  userId        String?    
+  userId        String?   @db.ObjectId
   views         Int       @default(0)
   clicks        Int       @default(0)
 }
@@ -177,9 +177,9 @@ model ViewCompaign {
 }
 
 model ClickCompaign {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  click    Int
-  time    DateTime
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  click      Int
+  time       DateTime
   campaign   CategoryHomeContent?  @relation(fields: [campaignId], references: [id])
   campaignId String?  @db.ObjectId
 }
@@ -196,4 +196,44 @@ model Answer {
 
 type SecondaryImgs {
   imgSrc String
+}
+
+model Courses {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  imageUrl      String?
+  totalDuration String
+  reviews       Review[]       
+  modules       Module[]      
+  comments      CourseComment[]
+}
+
+model CourseComment {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  time          String
+  comment       String
+  pfpUrl        String?
+  courses       Courses?       @relation(fields: [courseId], references: [id])
+  courseId      String?        @db.ObjectId
+}
+
+model Module {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  duration      String
+  videoUrl      String
+  courses       Courses?       @relation(fields: [courseId], references: [id])
+  courseId      String?        @db.ObjectId
+  documentUrl   String
+  documentName  String
+}
+
+model Review {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  time          DateTime
+  rating        Float
+  courses       Courses?       @relation(fields: [courseId], references: [id])
+  courseId      String?        @db.ObjectId
 }

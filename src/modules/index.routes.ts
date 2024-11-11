@@ -8,6 +8,7 @@ import FaqRoutes from './faq/faq.routes';
 import TextRoutes from './text/text.routes';
 import UploadFileRoutes from './upload-file/upload-file.routes';
 import VideoRouter from './videos/videos.routes'
+import CourseRouter from './videos/courses.routes'
 
 const router = Router();
 
@@ -19,5 +20,7 @@ router.use('/faqs', FaqRoutes);
 router.use('/texts', TextRoutes);
 router.use('/upload-file', UploadFileRoutes);
 router.use('/videos', VideoRouter);
+router.use('/courses', CourseRouter);
+
 
 export default router;

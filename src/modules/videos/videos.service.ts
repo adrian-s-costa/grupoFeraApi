@@ -36,6 +36,15 @@ class Service {
     return videos;
   }
 
+  public async postCourseComment(id: string, comment: any) {
+    comment.time = dayjs().format('DD/MM/YYYY')
+    const videos = await Repository.postCourseComment(id, comment);
+    if (!videos) {
+      throw new AppException(404, ErrorMessages.VIDEOS_NOT_FOUND);
+    }
+    return videos;
+  }
+
   public async postLike(id: string, action: string) {
     const like = await Repository.postLike(id, action)
     return like;
@@ -239,6 +248,15 @@ class Service {
     return result;
   }
 
+  public async getCourses(){
+    const courses = await Repository.getCourses();
+    return courses;
+  }
+
+  public async getCoursesById(courseId: string){
+    const course = await Repository.getCourseById(courseId);
+    return course;
+  }
 
   // public async createOne(data: CreateVideosDto) {
   //   return await Repository.createOne(data);
