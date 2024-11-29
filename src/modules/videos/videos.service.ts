@@ -107,6 +107,8 @@ class Service {
     const startOflastDay = currentDate.subtract(1, 'day').toDate();
     const endOfLastDay = currentDate.subtract(1, 'day').endOf('day').toDate()
 
+    console.log(startOfCurrentDay)
+
     // Intervalos de semanas
     const startOfCurrentWeek = currentDate.startOf('week').toDate(); // Início da semana atual
     const endOfCurrentWeek = currentDate.endOf('week').toDate(); // Fim da semana atual
@@ -185,28 +187,62 @@ class Service {
       ...content,
       measures: {
         day: {
-          dayChangePercentage,
-          dayChangeClick,
-          currentDayCTR,
-          dayChangeCTR
+          view: {
+            currentDayCount,
+            dayChangePercentage,
+          },
+          click:{
+            clickCurrentDayCount,
+            dayChangeClick
+          },
+          ctr:{
+            currentDayCTR,
+            dayChangeCTR
+          }
+          
         },
         week: {
-          weekChangePercentage,
-          weekChangeClick,
-          currentWeekCTR,
-          weekChangeCTR
+          view:{
+            currentWeekCount,
+            weekChangePercentage,
+          },
+          click: {
+            clickCurrentWeekCount,
+            weekChangeClick
+          },
+          ctr: {
+            currentWeekCTR,
+            weekChangeCTR
+          }
+
         },
         month: {
-          monthChangePercentage,
-          monthChangeClick,
-          currentMonthCTR,
-          monthChangeCTR
+          view: {
+            currentMonthCount,
+            monthChangePercentage,
+          },
+          click: {
+            clickCurrentMonthCount,
+            monthChangeClick,
+          },
+          ctr: {
+            currentMonthCTR,
+            monthChangeCTR
+          }
         },
         year: {
-          yearChangePercentage,
-          yearChangeClick,
-          currentYearCTR,
-          yearChangeCTR,
+          view:{
+            currentYearCount,
+            yearChangePercentage,
+          },
+          click:{
+            clickCurrentYearCount,
+            yearChangeClick,
+          },
+          ctr:{
+            currentYearCTR,
+            yearChangeCTR,
+          }
         }
       }
     };
@@ -240,6 +276,22 @@ class Service {
   public async getOneCategoryContentByUserId(userId: any){
     const content = await Repository.getOneCategoryContentByUserId(userId);
     return content;
+  }
+
+  public async getOneCategoryContentCustom(id: any, initialDate: Date, finalDate: Date){
+    const viewCount = await Repository.getViewOrClickCountByDateRange(id, 'viewInfos', initialDate, finalDate);
+    const clickCount = await Repository.getViewOrClickCountByDateRange(id, 'clickInfos', initialDate, finalDate);
+    const CTRCount = this.calculateCTR(viewCount, clickCount);
+
+    console.log(initialDate)
+    
+    //const dayChangeCTR = this.calculatePercentageChange(lastDayCTR, currentDayCTR).toFixed(1);
+
+    return {
+      viewCount,
+      clickCount,
+      CTRCount
+    };
   }
 
   public async postAnswer(id: any, answer: any){

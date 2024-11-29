@@ -31,11 +31,17 @@ class Controller {
     const result = await Service.getOneCategoryContent(req.params.id);
     res.status(200).json(result);
   }
+  
+  public async findOneCategoryContentCustom(req: Request, res: Response) {
+    const result = await Service.getOneCategoryContentCustom(req.params.id, req.body.initialDate, req.body.finalDate);
+    res.status(200).json(result);
+  }
 
   public async findOneCategoryContentByUserId(req: Request, res: Response) {
     const result = await Service.getOneCategoryContentByUserId(req.params.id);
     res.status(200).json(result);
   }
+
 
   public async postComment(req: Request, res: Response) {
     const result = await Service.postComment(req.params.id, req.body);

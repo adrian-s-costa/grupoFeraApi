@@ -265,7 +265,7 @@ class Repository {
     return count;
   }
 
-  public getOneCategoryContentByUserId(userId: string) {
+  public async getOneCategoryContentByUserId(userId: string) {
     return DataSource.categoryHomeContent.findMany({
       where: { userId }
     })

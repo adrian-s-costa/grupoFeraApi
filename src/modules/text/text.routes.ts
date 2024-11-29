@@ -63,6 +63,12 @@ router
   videosController.findOneCategoryContentByUserId
 )
 
+router
+.route('/home/category/content/:id/dashboard/custom')
+.post(
+  videosController.findOneCategoryContentCustom
+)
+
 
 
 export default router;

@@ -77,7 +77,7 @@ model CategoryHomeContent {
   user          User?      @relation(fields: [userId], references: [id])
   viewInfos     ViewCompaign[]
   clickInfos    ClickCompaign[]
-  userId        String?   @db.ObjectId
+  userId        String?   
   views         Int       @default(0)
   clicks        Int       @default(0)
 }
