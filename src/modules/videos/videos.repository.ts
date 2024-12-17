@@ -71,7 +71,7 @@ class Repository {
   public postCourseComment(id: string, comment: any) {
     return DataSource.courseComment.create({
       data: {
-        courseId: id,
+        moduleId: id,
         comment: comment.comment,
         time: comment.time,
         name: comment.name,
@@ -279,8 +279,11 @@ class Repository {
     return DataSource.courses.findUnique({
       where: { id: courseId },
       include: {
-        comments: true,
-        modules: true,
+        modules: {
+          include: {
+            comments: true
+          }
+        },
         reviews: true,
       }
     })

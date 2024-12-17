@@ -70,4 +70,10 @@ router
   Controller.deleteUser,
 );
 
+router
+.route('/get-user/:email')
+.get(
+  Controller.getUser,
+);
+
 export default router;

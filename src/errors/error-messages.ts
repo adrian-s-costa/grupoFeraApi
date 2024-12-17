@@ -23,4 +23,6 @@ export default {
   PENDING: 'Sua conta ainda não foi aprovada. Aguarde.',
   REPROVED: 'Sua conta não foi aceita, pois não condiz com nossos termos de uso.',
   UNATHORIZED: 'Você precisa estar autenticado para prosseguir.',
+
+  PAYMENT_ERROR: 'Algo de errado aconteceu ao gerar o pagamento.'
 };

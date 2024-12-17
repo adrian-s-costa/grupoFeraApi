@@ -166,6 +166,11 @@ class Service {
     const userDeleted = await Repository.deleteUser(credential);
     return userDeleted;
   }
+
+  public async getUser(credential: string){
+    return await Repository.findByCredential(credential);
+  }
+
 }
 
 export default new Service();

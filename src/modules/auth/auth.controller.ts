@@ -48,6 +48,11 @@ class Controller {
     const result = await UserService.deleteUser(req.body.credential)
     res.status(200).json(result);
   }
+
+  public async getUser(req: Request, res: Response){
+    const result = await UserService.getUser(req.params.email)
+    res.status(200).json(result);
+  }
 }
 
 export default new Controller();

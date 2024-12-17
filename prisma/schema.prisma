@@ -100,6 +100,8 @@ model User {
   codeExpiresIn DateTime?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  lastPaymentStaus String?
+  lastPaymentId    String?
   categoryHomeContent CategoryHomeContent[] 
 
 }
@@ -206,7 +208,6 @@ model Courses {
   totalDuration String
   reviews       Review[]       
   modules       Module[]      
-  comments      CourseComment[]
 }
 
 model CourseComment {
@@ -215,19 +216,30 @@ model CourseComment {
   time          String
   comment       String
   pfpUrl        String?
-  courses       Courses?       @relation(fields: [courseId], references: [id])
-  courseId      String?        @db.ObjectId
+  module        Module?       @relation(fields: [moduleId], references: [id])
+  moduleId      String?      @db.ObjectId
 }
 
 model Module {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   duration      String
+  description   String?
   videoUrl      String
   courses       Courses?       @relation(fields: [courseId], references: [id])
   courseId      String?        @db.ObjectId
   documentUrl   String
   documentName  String
+  documents     Document[] 
+  comments      CourseComment[]
+}
+
+model Document {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  time          DateTime
+  rating        Float
+  modules       Module?       @relation(fields: [moduleId], references: [id])
+  moduleId      String?        @db.ObjectId
 }
 
 model Review {
