@@ -281,7 +281,8 @@ class Repository {
       include: {
         modules: {
           include: {
-            comments: true
+            comments: true,
+            documents: true
           }
         },
         reviews: true,
