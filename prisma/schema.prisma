@@ -236,8 +236,8 @@ model Module {
 
 model Document {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
-  time          DateTime
-  rating        Float
+  documentName  String
+  documentUrl   String
   modules       Module?       @relation(fields: [moduleId], references: [id])
   moduleId      String?        @db.ObjectId
 }
