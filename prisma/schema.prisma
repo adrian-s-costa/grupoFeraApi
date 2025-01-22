@@ -213,7 +213,7 @@ model Courses {
 model CourseComment {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  time          String
+  time          String?
   comment       String
   pfpUrl        String?
   module        Module?       @relation(fields: [moduleId], references: [id])
