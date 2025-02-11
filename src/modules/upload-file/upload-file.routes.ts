@@ -20,4 +20,10 @@ router
   Controller.upload,
 );
 
+router
+.route("/teste/:archive/:type")
+.get(
+  Controller.generateSignedUrl
+)
+
 export default router;

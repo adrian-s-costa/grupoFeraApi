@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "civil-empire-436615-i6",
+  "private_key_id": "f6a58bada4029e7d21b65614640f61a00064c505",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCeB3OBjsCeDA7O\nFRsgwgbpCFM42IG7cx7dUr62UphsSdQBcukOo9XEpeaKZeejrNnb2VzRXi8hwza5\nNUu4KdKPAUDZiJcq6odSlmKjdv6a+A3d01LUydQDuj6/oaAFI3x2g3JQekdD9d8E\nVXViz5Y3XUTsBDrVJ6xbpOvjNGvtjMTDl9RJEaoSZumljp08+pW4RdGBuiXmj8/H\ntsPM/lJMwIdMTZ3PLRAcUSdXJTDLPKbSGxYXcmcagF3nXf9a9aglMD0WI6QUe1xx\n1oXl9jq+ormC6k1rk/ZfxmGZXtB4LtEePczSqgsWWqDztuh00LEjQ6eUOw80LhAu\n1rbfgT1lAgMBAAECggEAFPZFkNW0ALL2QsljbhK2snIfge6cNNZ2LWMEt7AYlmKr\nq96HgiDi4gEkpc6TLa+nvWUljgMpite3elVSvDTWAJCovsJC1RdDiIW4w1itOLa3\nNinKNr4n8K+jk61Xid71a04P25OAwQfMA6nnVopVMXZehlUgTbaDwytK+/ov59Rb\nPRoS6p2BTfxXtonWg3o0KNHtscmN3gJqpy02MayllleCsH3lK59EGm4OK3xutmhE\njJWbhSAWB6Y5F5nqDWANEuUSKZElAbF9VrErRa/+OI+czyWi+IWsG0fwNtKIzjxv\nakEuCwCKxKJ0gJ4C/LcTUzLfLENNNxC3/foOy9ESUQKBgQDRWScT9FIWKqbEcerQ\n3tBN1gxvhgF/+9mAqbY8psIXhzrA8F1NnpHR4U8LYYfH3HtcSsTbMjqkQ9BOlASC\nZItuML8262kqy2gWBBQDJpr8MiDqi82jhGw0JjTip2yXhAX7FSNIIwgp+s7PI0rn\n4bsmDjCT/CwsPf3jg3tSrnFQ0QKBgQDBPqgVc+J7x7isox8iB9EbmbDYli8kkkdF\nI46Yzo7h/j6Ah7nBe9OBJUc4ltNgB3/Z7kLE5a+UuwsP7VVrdjtF2JvXCdkPlCsL\n0lUTPS40w1vvQyJI6Sz3m71fraBlpebAALVEUH9lHGxMdqf8KlXVsiFeuhf1DdoJ\neRwR4WToVQKBgQCQ2eECG5EYqVZOoovZDfKPiMV9/PjYt0gdkE/502CEqxrqGOZW\nKJu43u60bz1l+paYm1tuV2jf89QUKrKcDjmzeqMzuts/sxJH+XZnX7TpPz4rS6Rz\nudKsmqsJENNAWydQPaX16ddiRJoIFOFlZHj7seHG4zslOZeMbpNL+EuLoQKBgFf0\nccKZ5Trbk5WYBUKS9j0uvcxGxxxJLAEvBudMFMKN2trba9PBzWmZkwoRtBGgODPz\n+xXtSPZUD9vm9RsdTCslRQEiLVam5NTTnf9MuGwxgvWqw78Vym7ExvP2bev2D8nS\nSK7YSLO3tR80Xo8qobjLA98+qkrSTCxFoF4PDcOlAoGBAIWy8U1LSicYPpLIyuVl\nejays5zVWkB5mY0qFcflpfBgBnxuh0+fUGVw0gCsrgNW+1yC+SxqRgwnKDRTfhEQ\ngxB4836TJG/c9ijUVbM+HezaWbzsYmIL3kACAZJvGjmbObF5++rTJyxX9t6OhyoS\nrBx6FzSF674/BrzRBQqekOko\n-----END PRIVATE KEY-----\n",
+  "client_email": "storage@civil-empire-436615-i6.iam.gserviceaccount.com",
+  "client_id": "102516717453415837345",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storage%40civil-empire-436615-i6.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
