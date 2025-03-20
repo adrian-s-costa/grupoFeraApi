@@ -55,25 +55,25 @@ model CategoryVideos {
 
 model Campaigns {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
-  texto         String
-  title         String
-  price         String
-  imgSrc        String
-  desc          String
+  texto         String?
+  title         String?
+  price         String?
+  imgSrc        String?
+  desc          String?
   uf            String[]
   secondaryImgs SecondaryImgs[]
 }
 
 model CategoryHomeContent {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
-  texto         String
-  title         String
-  imgSrc        String
-  desc          String
+  texto         String?
+  title         String?
+  imgSrc        String?
+  desc          String?
   secondaryImgs SecondaryImgs[]
-  btnText       String
-  redirectLink  String
-  filter        String
+  btnText       String?
+  redirectLink  String?
+  filter        String?
   user          User?      @relation(fields: [userId], references: [id])
   viewInfos     ViewCompaign[]
   clickInfos    ClickCompaign[]

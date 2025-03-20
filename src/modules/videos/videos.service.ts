@@ -256,11 +256,11 @@ class Service {
     return (clicks / views) * 100;
   }
 
-  private calculateCTRChange(oldValue: number, newValue: number): number {
-    if (oldValue === 0) oldValue = 1;
-    const result = ((newValue - oldValue) / oldValue) * 100;
-    return result;
-  }
+  // private calculateCTRChange(oldValue: number, newValue: number): number {
+  //   if (oldValue === 0) oldValue = 1;
+  //   const result = ((newValue - oldValue) / oldValue) * 100;
+  //   return result;
+  // }
 
   private calculatePercentageChange(oldValue: number, newValue: number): number {
     if (oldValue === 0) oldValue = 1;
@@ -268,10 +268,10 @@ class Service {
     return result;
   }
 
-  private calculateCTRPercentageChange(oldValue: number, newValue: number): number {
-    const result = ((newValue - oldValue) / oldValue) * 100;
-    return result;
-  }
+  // private calculateCTRPercentageChange(oldValue: number, newValue: number): number {
+  //   const result = ((newValue - oldValue) / oldValue) * 100;
+  //   return result;
+  // }
 
   public async getOneCategoryContentByUserId(userId: any){
     const content = await Repository.getOneCategoryContentByUserId(userId);

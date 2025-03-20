@@ -46,6 +46,7 @@ class Service {
   public async forgotPasswordUser(data: ForgotPasswordDto) {
     let user = null;
     const defaultPassword = '2#%%sdlkfjslf@@#%68646654879321400dfsgdhaçovmezxx4445'
+    // @ts-ignore
     let typeOfEmail = 'sendForgotPasswordEmail'
     const register: Prisma.UserCreateInput = {
       role: AccountRole.user,

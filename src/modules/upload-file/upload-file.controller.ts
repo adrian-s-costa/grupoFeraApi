@@ -43,7 +43,7 @@ class Controller {
       // Salva o arquivo
       const stream = file.createWriteStream();
 
-      stream.on('error', (err) => {
+      stream.on('error', (err: any) => {
         console.error('Erro ao criar o arquivo:', err);
         res.status(500).json({ error: 'Erro ao criar o arquivo.' });
       });
