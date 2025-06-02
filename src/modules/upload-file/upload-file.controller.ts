@@ -32,7 +32,7 @@ class Controller {
         [
           {
             "origin": ["*"],
-            "method": ["GET", "POST"],
+            "method": ["GET", "POST", "PUT"],
             "responseHeader": ["Content-Type"],
             "maxAgeSeconds": 3600
           }

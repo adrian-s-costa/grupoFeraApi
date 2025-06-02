@@ -13,9 +13,6 @@ const router = Router();
 router
 .route('/')
 .post(
-  // Auth.authentication,
-  //()=>{console.log('AAAA')},
-  //multer(multerOptions).single('file'),
   upload.single('image'),
   Controller.upload,
 );

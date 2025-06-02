@@ -10,6 +10,14 @@ class Service {
         return await payment.create({ body: req.body })
     }
 
+    public async createSub(sub: any) {
+        return await Repository.createOne(sub)
+    }
+
+    public async getAllSub() {
+        return await Repository.getAll()
+    }
+
     public async updateUserWithPaymentInfo(req: any) {     
         const url = `https://api.mercadopago.com/v1/payments/${req.body.data.id}`;
 

@@ -1,5 +1,5 @@
 export default {
-  host: 'mail.grupofera.app.br',
+  host: 'smtp.mailgun.org',
   port: 587,
   secure: false,
   auth: {

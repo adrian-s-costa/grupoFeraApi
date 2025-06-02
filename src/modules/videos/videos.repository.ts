@@ -222,7 +222,11 @@ class Repository {
   }
 
   public getCampaigns() {
-    return DataSource.campaigns.findMany()
+    return DataSource.campaigns.findMany({
+      where: {
+        imgSrc: { not: null }
+      }
+    })
   }
 
   public getOneCampaign(id: any){

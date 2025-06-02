@@ -23,5 +23,16 @@ router
   Controller.webhook,
 )
 
+router
+.route('/push')
+.post(
+  Controller.push,
+)
+
+router
+.route('/save-sub')
+.post(
+  Controller.saveSubs,
+)
 
 export default router;

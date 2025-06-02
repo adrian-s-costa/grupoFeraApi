@@ -14,6 +14,16 @@ class Repository {
     console.log(a)
     return a;
   }
+
+  public async createOne(data: Prisma.SubscriptionCreateInput) {
+    return await DataSource.subscription.create({
+      data
+    });
+  }
+
+  public getAll() {
+    return DataSource.subscription.findMany();
+  }
 }
 
 export default new Repository();
