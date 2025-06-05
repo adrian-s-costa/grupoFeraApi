@@ -102,7 +102,7 @@ class Service {
     return { message: 'Senha atualizada com sucesso!' };
   }
 
-  public async updateUserData(data: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string, initials: string }) {
+  public async updateUserData(data: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string }) {
     let newUser = await Repository.updateAdditionalInfo(data);
     const { password, ...rest } = newUser;
     return rest;

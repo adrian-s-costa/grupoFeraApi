@@ -41,7 +41,6 @@ class Validator extends BaseValidator {
       localidade: z.string().min(1),
       uf: z.string().min(1),
       pfpUrl: z.string().nullable(),
-      initials: z.string().min(1),
     }));
   };
 }

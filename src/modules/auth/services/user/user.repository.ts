@@ -26,7 +26,7 @@ class Repository {
     });
   }
 
-  public updateAdditionalInfo(info: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string, initials: string }) {
+  public updateAdditionalInfo(info: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string }) {
     return this.repository.update({
       where: { id: info.id },
       data: {
@@ -36,8 +36,7 @@ class Repository {
         cep: info.cep,
         localidade: info.localidade,
         uf: info.uf,
-        pfpUrl: info.pfpUrl,
-        initials: info.initials
+        pfpUrl: info.pfpUrl
       },
     });
   }
