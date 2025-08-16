@@ -24,8 +24,18 @@ class Controller {
     res.status(200).json(result);
   }
 
+  public async loginUserGoogle(req: Request, res: Response) {
+    const result = await UserService.loginUserGoogle(req);
+    res.status(200).json(result);
+  }
+
   public async forgotPasswordUser(req: Request, res: Response) {
     const result = await UserService.forgotPasswordUser(req.body);
+    res.status(200).json(result);
+  }
+
+  public async forgotPasswordGoogle(req: Request, res: Response) {
+    const result = await UserService.forgotPasswordUserGoogle(req.body);
     res.status(200).json(result);
   }
 

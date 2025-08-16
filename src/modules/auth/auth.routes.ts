@@ -36,10 +36,22 @@ router
 );
 
 router
+.route('/google')
+.post(
+  Controller.loginUserGoogle,
+);
+
+router
 .route('/forgot-password')
 .post(
   Validator.forgotPassword,
   Controller.forgotPasswordUser,
+);
+
+router
+.route('/forgot-google')
+.post(
+  Controller.forgotPasswordGoogle,
 );
 
 router

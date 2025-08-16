@@ -12,6 +12,7 @@ import CodeHelper from '@helpers/code.helper';
 import JwtHelper from '@helpers/token.helper';
 import PasswordHelper from '@helpers/password.helper';
 import MailService from '../../../mail/mail.service';
+import jwt from 'jsonwebtoken';
 
 class Service {
   public async loginUser(data: LoginDto) {
@@ -41,6 +42,86 @@ class Service {
       token: JwtHelper.createToken(payload),
       account: payload,
     };
+  }
+
+  public async loginUserGoogle(req: any) {
+
+    const { credential } = req.body;
+    const decoded = jwt.decode(credential);
+    const { email, name, picture, sub: googleId } = decoded;
+    const userGoogle = { email, name, picture, googleId };
+
+    const userFromPersistence = await this.findByCredential(userGoogle.email);
+    
+    this.checkIfUserIsActive(userFromPersistence);
+
+    const payload: IPayloadDto = {
+      id: userFromPersistence.id,
+      role: userFromPersistence.role,
+      name: userFromPersistence.name,
+      email: userFromPersistence.email,
+      cellphone: userFromPersistence.cellphone!,
+      cep: userFromPersistence.cep!,
+      localidade: userFromPersistence.localidade!,
+      uf: userFromPersistence.uf!,
+      pfpUrl: userFromPersistence.pfpUrl!
+    };
+
+    return {
+      token: JwtHelper.createToken(payload),
+      account: payload,
+    };
+  }
+
+  public async forgotPasswordUserGoogle(data: ForgotPasswordDto) {
+    let user = null;
+    const defaultPassword = '2#%%sdlkfjslf@@#%68646654879321400dfsgdhaçovmezxx4445'
+
+    const { credential } = data;
+    const decoded = jwt.decode(credential);
+    const { email, name, picture, sub: googleId } = decoded;
+
+    const googleUser = { email, name, picture, sub: googleId };
+
+
+    // @ts-ignore
+    let typeOfEmail = 'sendForgotPasswordEmail'
+    const register: Prisma.UserCreateInput = {
+      role: AccountRole.user,
+      name: 'Sem Nome',
+      email: googleUser.email,
+      password: PasswordHelper.hash(defaultPassword),
+      status: AccountStatus.ativo,
+    };
+
+    if (data.register) {
+      typeOfEmail = 'sendRegisterPasswordEmail'
+      user = await this.findByCredentialRegister(googleUser.email);
+
+      if(!user || user == null){ 
+       await Repository.createUser(register);
+      }
+
+      user = await this.findByCredentialRegister(googleUser.email);
+
+      if (user && this.comparePasswords(defaultPassword, user.password)){
+        await Repository.deleteUser(googleUser.email)
+        await Repository.createUser(register);
+      } else {
+        throw new AppException(400, ErrorMessages.ACCOUNT_ALREADY_ACTIVE);
+      }
+    }
+    
+    user = await this.findByCredential(googleUser.email);
+    const { code, minutes } = await this.storeCode(user.email);
+    
+    if (data.register){
+      await MailService.sendRegisterPasswordEmail(user.email, { code, minutes });
+      return { message: 'Código de registro de conta enviado no seu email!', email: user.email };
+    }
+
+    await MailService.sendForgotPasswordEmail(user.email, {code, minutes})
+    return { message: 'Código de recuperação de senha enviado no seu email!', email: user.email };
   }
 
   public async forgotPasswordUser(data: ForgotPasswordDto) {
