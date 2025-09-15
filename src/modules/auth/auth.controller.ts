@@ -55,7 +55,7 @@ class Controller {
   }
 
   public async deleteUser(req: Request, res: Response){
-    const result = await UserService.deleteUser(req.body.credential)
+    const result = await UserService.deleteUser(req.body.credential, req.body.initials)
     res.status(200).json(result);
   }
 

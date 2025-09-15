@@ -25,6 +25,22 @@ class Service {
     // compare password.
     this.comparePasswords(data.password, user.password);
 
+    const responseAlloyalSmartlink = await fetch(`https://api.lecupon.com/client/v2/businesses/52187156000127/users/${user.initials}/smart_link`, {
+      method: "POST",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+
+      }),
+    });
+
+    const responseAlloyalSmartlinkJson = await responseAlloyalSmartlink.json(); 
+
     // generate token and account object.
     const payload: IPayloadDto = {
       id: user.id,
@@ -35,7 +51,9 @@ class Service {
       cep: user.cep!,
       localidade: user.localidade!,
       uf: user.uf!,
-      pfpUrl: user.pfpUrl!
+      pfpUrl: user.pfpUrl!,
+      initials: user.initials!,
+      smart_token: responseAlloyalSmartlinkJson.smart_token!
     };
 
     return {
@@ -283,8 +301,22 @@ class Service {
     return { code, minutes };
   }
 
-  public async deleteUser(credential: string){
+  public async deleteUser(credential: string, initials: string){
     const userDeleted = await Repository.deleteUser(credential);
+
+    const responseAlloyalDelete = await fetch(`https://api.lecupon.com/client/v2/businesses/2434/authorized_users/${initials}`, {
+      method: "DELETE",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+      }),
+    });
+    
     return userDeleted;
   }
 

@@ -10,4 +10,6 @@ export interface IPayloadDto {
   localidade?: string;
   uf?: string;
   pfpUrl?: string;
+  initials?: string;
+  smart_token?: string;
 }

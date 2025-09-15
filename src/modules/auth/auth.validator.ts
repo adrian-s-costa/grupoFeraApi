@@ -26,7 +26,8 @@ class Validator extends BaseValidator {
 
   public deleteUser: RequestHandler = (req, res, next) => {
     this.validateSchema(req, next, 'body', z.object({
-      credential: z.string().email()
+      credential: z.string().email(),
+      initials: z.string()
     }));
   };  
 
