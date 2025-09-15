@@ -200,6 +200,7 @@ class Service {
         email: rest.email,
         name: rest.name,
         password: newUser.password,
+        active: true
       }),
     });
 
