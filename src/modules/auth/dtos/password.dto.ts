@@ -11,6 +11,7 @@ export const ResetPassword = z.object({
   credential: z.string().trim().email(),
   password: z.string().trim().min(8),
   confirmPassword: z.string().trim(),
+  initials: z.string()
 })
 .refine(
   (body) => {

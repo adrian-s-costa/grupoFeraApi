@@ -157,7 +157,7 @@ class Service {
     
     user = await this.findByCredential(data.credential);
     const { code, minutes } = await this.storeCode(user.email);
-    
+
     if (data.register){
       await MailService.sendRegisterPasswordEmail(user.email, { code, minutes });
       return { message: 'Código de registro de conta enviado no seu email!' };
@@ -178,15 +178,53 @@ class Service {
   public async resetPasswordUser(data: ResetPasswordDto) {
     // find user.
     const user = await this.findByCredential(data.credential);
-    
-    await Repository.changePassword(user.id, PasswordHelper.hash(data.password));
+    await Repository.changePassword(user.id, PasswordHelper.hash(data.password), data.initials);
     return { message: 'Senha atualizada com sucesso!' };
   }
 
   public async updateUserData(data: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string }) {
     let newUser = await Repository.updateAdditionalInfo(data);
     const { password, ...rest } = newUser;
-    return rest;
+
+    const responseAlloyalCreate = await fetch("https://api.lecupon.com/client/v2/businesses/2434/users", {
+      method: "POST",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+        cpf: rest.initials,
+        email: rest.email,
+        name: rest.name,
+        password: newUser.password,
+      }),
+    });
+
+    const responseAlloyalSmartlink = await fetch(`https://api.lecupon.com/client/v2/businesses/52187156000127/users/${rest.initials}/smart_link`, {
+      method: "POST",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+
+      }),
+    });
+
+    const responseAlloyalSmartlinkJson = await responseAlloyalSmartlink.json(); 
+
+    const newRest = {
+      ...rest,
+      smart_token: responseAlloyalSmartlinkJson.smart_token
+    };
+
+    return newRest
   }
 
   private checkCodeValidation(codeExpiresIn: Date) {

@@ -51,13 +51,14 @@ class Repository {
     });
   }
 
-  public changePassword(id: string, password: string) {
+  public changePassword(id: string, password: string, initials: string) {
     return this.repository.update({
       where: { id },
       data: {
         code: null,
         codeExpiresIn: null,
         password,
+        initials
       },
     });
   }
