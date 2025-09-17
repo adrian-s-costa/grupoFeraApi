@@ -17,6 +17,18 @@ class Controller {
     res.status(200).json(result);
   }
 
+  public async findAllShows(req: Request, res: Response) {
+    const { size, page, search } = req.query as RequestQueryDto;
+    const result = await Service.findAllNoPaginationShows(search);
+    res.status(200).json(result);
+  }
+
+  public async findOneShow(req: Request, res: Response) {
+    const result = await Service.findOneShow(req.params.id);
+    res.status(200).json(result);
+  }
+
+
   public async findOneCampaign(req: Request, res: Response) {
     const result = await Service.getOneCampaign(req.params.id);
     res.status(200).json(result);

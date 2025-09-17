@@ -262,3 +262,16 @@ model Review {
   courses       Courses?       @relation(fields: [courseId], references: [id])
   courseId      String?        @db.ObjectId
 }
+
+model TvMaxShows {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String?
+  year           String
+  seasonAmount   Int
+  tag            String[]
+  season         Json
+  showFrequency  String?
+  showThumbSrc   String?
+}
+

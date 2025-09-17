@@ -56,6 +56,17 @@ class Repository {
     });
   }
 
+  public findOneShow(id: string) {
+    return DataSource.tvMaxShows.findUnique({
+      where: { id },
+    });
+  }
+
+  public async findAllNoPaginationShows (search?: string) {
+    //const where: Prisma.VideosWhereInput = {};
+    return await DataSource.tvMaxShows.findMany();
+  }
+
   public postComment(id: string, comment: any) {
     return DataSource.comment.create({
       data: {

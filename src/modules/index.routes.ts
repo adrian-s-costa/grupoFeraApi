@@ -10,6 +10,7 @@ import UploadFileRoutes from './upload-file/upload-file.routes';
 import VideoRouter from './videos/videos.routes'
 import CourseRouter from './videos/courses.routes'
 import PaymentRouter from './payment/payment.routes'
+import tvMaxRouter from './videos/tvMax.routes'
 
 const router = Router();
 
@@ -23,6 +24,8 @@ router.use('/upload-file', UploadFileRoutes);
 router.use('/videos', VideoRouter);
 router.use('/courses', CourseRouter);
 router.use('/process_payment', PaymentRouter);
+router.use('/tvmax', tvMaxRouter);
+
 
 
 

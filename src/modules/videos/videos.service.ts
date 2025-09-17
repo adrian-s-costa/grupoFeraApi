@@ -27,6 +27,19 @@ class Service {
     return videos;
   }
 
+  public async findAllNoPaginationShows(search?: string) {
+    return await Repository.findAllNoPaginationShows(search);
+  }
+
+  public async findOneShow(id: string) {
+    const videos = await Repository.findOneShow(id);
+
+    if (!videos) {
+      throw new AppException(404, ErrorMessages.VIDEOS_NOT_FOUND);
+    }
+    return videos;
+  }
+
   public async postComment(id: string, comment: any) {
     comment.time = dayjs().format('DD/MM/YYYY')
     const videos = await Repository.postComment(id, comment);
