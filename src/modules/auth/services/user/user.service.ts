@@ -73,6 +73,20 @@ class Service {
     
     this.checkIfUserIsActive(userFromPersistence);
 
+    const responseAlloyalSmartlink = await fetch(`https://api.lecupon.com/client/v2/businesses/52187156000127/users/${userFromPersistence.initials}/smart_link`, {
+      method: "POST",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+
+      }),
+    })
+
     const payload: IPayloadDto = {
       id: userFromPersistence.id,
       role: userFromPersistence.role,
@@ -82,7 +96,8 @@ class Service {
       cep: userFromPersistence.cep!,
       localidade: userFromPersistence.localidade!,
       uf: userFromPersistence.uf!,
-      pfpUrl: userFromPersistence.pfpUrl!
+      pfpUrl: userFromPersistence.pfpUrl!,
+      initials: userFromPersistence.initials!
     };
 
     return {
