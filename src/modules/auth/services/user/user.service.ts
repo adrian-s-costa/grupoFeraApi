@@ -87,6 +87,8 @@ class Service {
       }),
     })
 
+    const responseAlloyalSmartlinkJson = await responseAlloyalSmartlink.json();
+
     const payload: IPayloadDto = {
       id: userFromPersistence.id,
       role: userFromPersistence.role,
@@ -97,7 +99,8 @@ class Service {
       localidade: userFromPersistence.localidade!,
       uf: userFromPersistence.uf!,
       pfpUrl: userFromPersistence.pfpUrl!,
-      initials: userFromPersistence.initials!
+      initials: userFromPersistence.initials!,
+      smart_token: responseAlloyalSmartlinkJson.smart_token!
     };
 
     return {
@@ -339,6 +342,27 @@ class Service {
     return await Repository.findByCredential(credential);
   }
 
+  public async getSmartlink(initials: string){
+    const responseAlloyalSmartlink = await fetch(`https://api.lecupon.com/client/v2/businesses/52187156000127/users/${initials}/smart_link`, {
+      method: "POST",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+
+      }),
+    });
+
+    const responseAlloyalSmartlinkJson = await responseAlloyalSmartlink.json(); 
+    
+    return {
+      smart_token: responseAlloyalSmartlinkJson.smart_token
+    }
+  }
 }
 
 export default new Service();

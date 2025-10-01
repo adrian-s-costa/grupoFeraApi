@@ -63,6 +63,11 @@ class Controller {
     const result = await UserService.getUser(req.params.email)
     res.status(200).json(result);
   }
+
+  public async getSmartlink(req: Request, res: Response){
+    const result = await UserService.getSmartlink(req.params.initials)
+    res.status(200).json(result);
+  }
 }
 
 export default new Controller();

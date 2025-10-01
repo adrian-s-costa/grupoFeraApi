@@ -88,4 +88,10 @@ router
   Controller.getUser,
 );
 
+router
+.route('/club/smartlink/:initials')
+.get(
+  Controller.getSmartlink,
+);
+
 export default router;
