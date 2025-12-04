@@ -64,6 +64,11 @@ class Controller {
     res.status(200).json(result);
   }
 
+  public async getDocument(req: Request, res: Response){
+    const result = await UserService.getDocument(req.params.email)
+    res.status(200).json(result);
+  }
+
   public async getSmartlink(req: Request, res: Response){
     const result = await UserService.getSmartlink(req.params.initials)
     res.status(200).json(result);

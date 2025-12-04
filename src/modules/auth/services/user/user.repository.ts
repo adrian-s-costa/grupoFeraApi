@@ -26,6 +26,16 @@ class Repository {
     });
   }
 
+  public findByDocument(document: string) {
+    return this.repository.findFirst({
+      where: {
+        OR: [
+          { initials: document },
+        ],
+      },
+    });
+  }
+
   public updateAdditionalInfo(info: { id: string, name: string, secName: string, tel: string, bornDate: string, cep: string, localidade: string, uf: string, pfpUrl: string }) {
     return this.repository.update({
       where: { id: info.id },

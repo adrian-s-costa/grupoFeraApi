@@ -342,6 +342,10 @@ class Service {
     return await Repository.findByCredential(credential);
   }
 
+  public async getDocument(document: string){
+    return await Repository.findByDocument(document);
+  }
+
   public async getSmartlink(initials: string){
     const responseAlloyalSmartlink = await fetch(`https://api.lecupon.com/client/v2/businesses/52187156000127/users/${initials}/smart_link`, {
       method: "POST",

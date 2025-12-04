@@ -89,6 +89,12 @@ router
 );
 
 router
+.route('/get-document/:email')
+.get(
+  Controller.getDocument,
+);
+
+router
 .route('/club/smartlink/:initials')
 .get(
   Controller.getSmartlink,
