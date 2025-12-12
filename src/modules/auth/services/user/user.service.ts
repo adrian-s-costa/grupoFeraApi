@@ -62,15 +62,60 @@ class Service {
     };
   }
 
-  public async loginUserGoogle(token?: any) {
-    // const { credential } = req.body;
+  public async loginUserGoogle(req: any) {
 
-    const decoded =  jwt.decode(token);
-
-    console.log(decoded)
-
+    const { credential } = req.body;
+    const decoded = jwt.decode(credential);
     const { email, name, picture, sub: googleId } = decoded;
     const userGoogle = { email, name, picture, googleId };
+
+    const userFromPersistence = await this.findByCredential(userGoogle.email);
+    
+    this.checkIfUserIsActive(userFromPersistence);
+
+    const responseAlloyalSmartlink = await fetch(`https://api.lecupon.com/client/v2/businesses/52187156000127/users/${userFromPersistence.initials}/smart_link`, {
+      method: "POST",
+      headers: {
+        "X-ClientEmployee-Email": "api@aagencia.com.br",
+        "X-ClientEmployee-Token": "jX_wddT9R14fa1_6zV_m",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "ngrok-skip-browser-warning": "69420"
+      },
+      body: JSON.stringify({
+
+      }),
+    })
+
+    const responseAlloyalSmartlinkJson = await responseAlloyalSmartlink.json();
+
+    const payload: IPayloadDto = {
+      id: userFromPersistence.id,
+      role: userFromPersistence.role,
+      name: userFromPersistence.name,
+      email: userFromPersistence.email,
+      cellphone: userFromPersistence.cellphone!,
+      cep: userFromPersistence.cep!,
+      localidade: userFromPersistence.localidade!,
+      uf: userFromPersistence.uf!,
+      pfpUrl: userFromPersistence.pfpUrl!,
+      initials: userFromPersistence.initials!,
+      smart_token: responseAlloyalSmartlinkJson.smart_token!
+    };
+
+    return {
+      token: JwtHelper.createToken(payload),
+      account: payload,
+    };
+  }
+
+    public async loginUserGoogleAlt(token?: any) {
+    // const { credential } = req.body;
+
+    const decoded = jwt.decode(token);
+
+    const { email, name, picture } = decoded;
+    const userGoogle = { email, name, picture };
 
     const userFromPersistence = await this.findByCredential(userGoogle.email);
     
