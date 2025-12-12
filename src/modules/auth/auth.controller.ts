@@ -53,8 +53,8 @@ class Controller {
 
     const params: Record<string, string> = {
       code,
-      client_id: process.env.GOOGLE_CLIENT_ID || "",
-      client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
+      client_id: process.env.GOOGLE_CLIENT_ID || "298281998851-srot2ljcl61gn4bnsja7g1850dr05v9g.apps.googleusercontent.com",
+      client_secret: process.env.GOOGLE_CLIENT_SECRET || "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",
       redirect_uri: "https://grupoferaapi.shop/auth/google/callback",
       grant_type: "authorization_code",
     };
