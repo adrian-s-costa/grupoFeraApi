@@ -62,10 +62,13 @@ class Service {
     };
   }
 
-  public async loginUserGoogle(req: any) {
+  public async loginUserGoogle(token?: any) {
+    // const { credential } = req.body;
 
-    const { credential } = req.body;
-    const decoded = jwt.decode(credential);
+    const decoded =  jwt.decode(token);
+
+    console.log(decoded)
+
     const { email, name, picture, sub: googleId } = decoded;
     const userGoogle = { email, name, picture, googleId };
 

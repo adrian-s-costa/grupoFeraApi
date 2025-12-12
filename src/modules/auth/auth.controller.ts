@@ -67,6 +67,8 @@ class Controller {
 
     console.log(tokenResponse);
 
+    const result = await UserService.loginUserGoogle(tokenResponse.id_token);
+
     res.redirect(`https://eppi-front.vercel.app/?token=${tokenResponse.id_token}`);
   }
 
