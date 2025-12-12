@@ -42,6 +42,18 @@ router
 );
 
 router
+.route('/google/alt')
+.post(
+  Controller.loginUserGoogleAlt,
+);
+
+router
+.route('/google/callback')
+.post(
+  Controller.loginUserGoogle,
+);
+
+router
 .route('/forgot-password')
 .post(
   Validator.forgotPassword,
