@@ -50,7 +50,7 @@ router
 router
 .route('/google/callback')
 .get(
-  Controller.loginUserGoogle,
+  Controller.loginUserGoogleCallback,
 );
 
 router
