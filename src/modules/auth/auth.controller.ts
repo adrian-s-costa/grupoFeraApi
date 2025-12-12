@@ -55,7 +55,7 @@ class Controller {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID || "298281998851-srot2ljcl61gn4bnsja7g1850dr05v9g.apps.googleusercontent.com",
       client_secret: process.env.GOOGLE_CLIENT_SECRET || "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",
-      redirect_uri: "https://eppi-front.vercel.app/",
+      redirect_uri: "https://grupoferaapi.shop/auth/google/callback",
       grant_type: "authorization_code",
     };
 
@@ -68,6 +68,8 @@ class Controller {
     console.log(tokenResponse);
 
     const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
+
+    res.redirect(`https://eppi-front.vercel.app/`);
   }
 
   public async loginUserGoogle(req: Request, res: Response) {
