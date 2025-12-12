@@ -43,13 +43,13 @@ router
 
 router
 .route('/google/alt')
-.post(
+.get(
   Controller.loginUserGoogleAlt,
 );
 
 router
 .route('/google/callback')
-.post(
+.get(
   Controller.loginUserGoogle,
 );
 

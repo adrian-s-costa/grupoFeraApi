@@ -55,7 +55,7 @@ class Controller {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID || "",
       client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
-      redirect_uri: "https://SEU_BACKEND/auth/google/callback",
+      redirect_uri: "https://grupoferaapi.shop/auth/google/callback",
       grant_type: "authorization_code",
     };
 
