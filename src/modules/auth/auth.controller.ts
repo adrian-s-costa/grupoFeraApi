@@ -65,11 +65,26 @@ class Controller {
       body: new URLSearchParams(params).toString(),
     }).then(r => r.json());
 
-    const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
+      const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
+      const encoded = encodeURIComponent(JSON.stringify(result.account))
 
-    const encoded = encodeURIComponent(JSON.stringify(result.account))
+      res.setHeader("Content-Type", "text/html");
+      res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <title>Finalizando login</title>
+        </head>
+        <body>
+          <script>
+            window.location.href = "eppi://auth/callback?data=${encoded}";
+          </script>
 
-    res.redirect(`https://eppi.store/auth/callback?google=true&data=${encoded}`);
+          <p>Finalizando login…</p>
+        </body>
+      </html>
+      `);
   }
 
   public async loginUserGoogle(req: Request, res: Response) {
