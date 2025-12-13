@@ -67,9 +67,9 @@ class Controller {
 
     const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
 
-    console.log(result);
+    const encoded = encodeURIComponent(JSON.stringify(result.account))
 
-    res.redirect(`https://eppi-front.vercel.app/login?google=true`);
+    res.redirect(`https://eppi-front.vercel.app/login?google=true&data=${encoded}`);
   }
 
   public async loginUserGoogle(req: Request, res: Response) {
