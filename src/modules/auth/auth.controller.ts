@@ -65,11 +65,11 @@ class Controller {
       body: new URLSearchParams(params).toString(),
     }).then(r => r.json());
 
-    console.log(tokenResponse);
-
     const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
 
-    res.redirect(`https://eppi-front.vercel.app/`);
+    console.log(result);
+
+    res.redirect(`https://eppi-front.vercel.app/login?google=true`);
   }
 
   public async loginUserGoogle(req: Request, res: Response) {
