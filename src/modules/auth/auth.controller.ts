@@ -27,7 +27,7 @@ class Controller {
   public async loginUserGoogleAlt(req: Request, res: Response) {
     const params = new URLSearchParams({
       client_id: process.env.GOOGLE_CLIENT_ID || "298281998851-srot2ljcl61gn4bnsja7g1850dr05v9g.apps.googleusercontent.com",
-      redirect_uri: 'https://eppi.store/auth/callback',
+      redirect_uri: 'https://grupoferaapi.shop/auth/google/callback',
       response_type: 'code',
       scope: 'profile email',
       access_type: 'offline',
