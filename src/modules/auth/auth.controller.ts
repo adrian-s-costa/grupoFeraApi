@@ -27,7 +27,7 @@ class Controller {
   public async loginUserGoogleAlt(req: Request, res: Response) {
     const params = new URLSearchParams({
       client_id: process.env.GOOGLE_CLIENT_ID || "298281998851-srot2ljcl61gn4bnsja7g1850dr05v9g.apps.googleusercontent.com",
-      redirect_uri: 'https://grupoferaapi.shop/auth/google/callback',
+      redirect_uri: 'https://eppi.store/auth/callback',
       response_type: 'code',
       scope: 'profile email',
       access_type: 'offline',
@@ -55,7 +55,7 @@ class Controller {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID || "298281998851-srot2ljcl61gn4bnsja7g1850dr05v9g.apps.googleusercontent.com",
       client_secret: process.env.GOOGLE_CLIENT_SECRET || "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",
-      redirect_uri: "https://grupoferaapi.shop/auth/google/callback",
+      redirect_uri: "https://eppi.store/auth/callback",
       grant_type: "authorization_code",
     };
 
@@ -69,7 +69,7 @@ class Controller {
 
     const encoded = encodeURIComponent(JSON.stringify(result.account))
 
-    res.redirect(`https://eppi-front.vercel.app/login?google=true&data=${encoded}`);
+    res.redirect(`https://eppi.store/auth/callback?google=true&data=${encoded}`);
   }
 
   public async loginUserGoogle(req: Request, res: Response) {
