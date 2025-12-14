@@ -48,6 +48,12 @@ router
 );
 
 router
+.route('/google/native')
+.post(
+  Controller.loginUserGoogleAlt,
+);
+
+router
 .route('/google/callback')
 .get(
   Controller.loginUserGoogleCallback,

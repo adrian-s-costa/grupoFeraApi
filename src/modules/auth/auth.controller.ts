@@ -39,7 +39,40 @@ class Controller {
     );
   }
 
-  
+  public async loginUserGoogleNative(req: Request, res: Response) {
+    try {
+        const { code } = req.body;
+
+        // IMPORTANTE: Para o fluxo iOS, a troca de token é direta.
+        // Muitas vezes não precisa de client_secret se o Client ID for do tipo iOS/Android Nativo.
+        // Mas se precisar, use as credenciais correspondentes.
+
+        const params = {
+            code,
+            client_id: "298281998851-8h5l7o8iin0ffndfl6th3afvtlekgics.apps.googleusercontent.com", // ID IOS
+            redirect_uri: "com.googleusercontent.apps.298281998851-8h5l7o8iin0ffndfl6th3afvtlekgics:/oauth2callback", // URI IOS
+            grant_type: "authorization_code"
+        };
+        
+        // Se o Google reclamar de falta de secret, você terá que criar um Client ID Web para fazer a troca,
+        // mas geralmente fluxo nativo aceita troca direta ou validação de id_token.
+
+        const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(params).toString(),
+        }).then(r => r.json());
+
+        // Usa sua lógica existente para achar/criar o usuário
+        const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
+
+        // Retorna JSON puro (sem HTML)
+        return res.json(result);
+
+    } catch (error) {
+        return res.status(400).json({ error: "Falha no login nativo" });
+    }
+  }
 
   public async loginUserGoogleCallback(req: Request, res: Response) {
 
