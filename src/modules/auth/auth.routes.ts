@@ -50,7 +50,7 @@ router
 router
 .route('/google/native')
 .post(
-  Controller.loginUserGoogleAlt,
+  Controller.loginUserGoogleNative,
 );
 
 router
