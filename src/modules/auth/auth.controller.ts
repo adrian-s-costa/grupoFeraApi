@@ -66,8 +66,10 @@ class Controller {
         // Usa sua lógica existente para achar/criar o usuário
         const result = await UserService.loginUserGoogleAlt(tokenResponse.id_token);
 
+        console.log(result)
+
         // Retorna JSON puro (sem HTML)
-        return res.json(result);
+        return res.json(result.account);
 
     } catch (error) {
         return res.status(400).json({ error: "Falha no login nativo" });
