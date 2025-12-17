@@ -306,7 +306,7 @@ class Repository {
   }
 
   public getVideoHome(){
-    return DataSource.videoHome.findMany()
+    return DataSource.videoHome.findFirst()
   }
 
 }
