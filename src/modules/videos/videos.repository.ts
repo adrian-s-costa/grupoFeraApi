@@ -305,6 +305,10 @@ class Repository {
     })
   }
 
+  public getVideoHome(){
+    return DataSource.videoHome.findMany()
+  }
+
 }
 
 export default new Repository();

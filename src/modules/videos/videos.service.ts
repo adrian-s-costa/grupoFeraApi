@@ -100,6 +100,11 @@ class Service {
     return categories;
   }
 
+  public async getVideoHome(){
+    const homeVid = await Repository.getVideoHome();
+    return homeVid;
+  }
+
   public async getOneCampaign(id: any){
     const campaign = await Repository.getOneCampaign(id);
     return campaign;

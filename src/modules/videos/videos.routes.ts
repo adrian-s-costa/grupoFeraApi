@@ -81,6 +81,12 @@ router
 )
 
 router
+.route('/videoHome')
+.get(
+  Controller.getVideoHome,
+)
+
+router
 .route('/courses/:id')
 .get(
   Controller.getCourseById,

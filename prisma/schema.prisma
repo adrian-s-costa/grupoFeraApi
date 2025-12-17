@@ -172,6 +172,14 @@ model Videos {
   comments     Comment[]
 }
 
+model VideoHome {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  url          String
+  name         String
+  description  String
+  thumbnailUrl String
+}
+
 model Comment {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   name    String

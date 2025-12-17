@@ -105,6 +105,11 @@ class Controller {
     return res.status(200).json(result)
   }
 
+  public async getVideoHome(req: Request, res: Response) {
+    const result = await Service.getVideoHome();
+    return res.status(200).json(result)
+  }
+
   public async getCourses(req: Request, res: Response) {
     const result = await Service.getCourses();
     return res.status(200).json(result)
