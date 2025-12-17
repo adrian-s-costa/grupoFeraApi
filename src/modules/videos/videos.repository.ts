@@ -306,7 +306,7 @@ class Repository {
   }
 
   public async getVideoHome(){
-    
+    return await DataSource.videoHome.findFirst()
   }
 
 }
