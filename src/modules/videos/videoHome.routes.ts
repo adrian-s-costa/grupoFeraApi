@@ -17,17 +17,5 @@ router
 //   Controller.createOne,
 // );
 
-router
-.route('/:id')
-.get(
-  Controller.findOneShow,
-)
-// .put(
-//   Validator.updateOne,
-//   Controller.updateOne,
-// )
-// .delete(
-//   Controller.deleteOne,
-// );
 
 export default router;

@@ -306,7 +306,7 @@ class Repository {
   }
 
   public async getVideoHome(){
-    return console.log("ababa")
+    return await DataSource.videoHome.findMany()
   }
 
 }
