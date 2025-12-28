@@ -163,9 +163,9 @@ class Service {
 
     const { credential } = data;
     const decoded = jwt.decode(credential);
-    const { email, name, picture, sub: googleId } = decoded;
+    const { email, name, picture } = decoded;
 
-    const googleUser = { email, name, picture, sub: googleId };
+    const googleUser = { email, name, picture };
 
 
     // @ts-ignore

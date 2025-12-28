@@ -54,6 +54,12 @@ router
 );
 
 router
+.route('/google/register-native')
+.post(
+  Controller.registerUserGoogleNative,
+);
+
+router
 .route('/google/callback')
 .get(
   Controller.loginUserGoogleCallback,
