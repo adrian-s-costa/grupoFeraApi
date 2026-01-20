@@ -283,3 +283,21 @@ model TvMaxShows {
   showThumbSrc   String?
 }
 
+model Dealership {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  address     String
+  distance    String
+  offerId     String       @db.ObjectId
+  image       String
+  rating      Float
+  reviews     Int
+  coordinates Coordinates
+}
+
+type Coordinates {
+  lat Float
+  lng Float
+}
+

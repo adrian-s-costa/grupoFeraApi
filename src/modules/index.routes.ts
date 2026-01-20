@@ -12,6 +12,7 @@ import CourseRouter from './videos/courses.routes'
 import PaymentRouter from './payment/payment.routes'
 import tvMaxRouter from './videos/tvMax.routes'
 import videoRouter from './videos/videoHome.routes'
+import offersRouter from './offers/offers.routes'
 
 const router = Router();
 
@@ -27,6 +28,6 @@ router.use('/courses', CourseRouter);
 router.use('/process_payment', PaymentRouter);
 router.use('/tvmax', tvMaxRouter);
 router.use('/videoHome', videoRouter);
-
+router.use('/offers', offersRouter);
 
 export default router;
