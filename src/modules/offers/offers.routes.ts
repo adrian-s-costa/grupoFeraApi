@@ -17,4 +17,10 @@ router
   Controller.findOne,
 )
 
+router
+.route('/collabs')
+.get(
+  Controller.collab,
+)
+
 export default router;

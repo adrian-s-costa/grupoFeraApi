@@ -12,6 +12,11 @@ class Controller {
         res.status(200).json(result);
     }
 
+    public async collab(req: Request, res: Response) {
+        const result = await Service.collab();
+        res.status(200).json(result);
+    }
+
 }
 
 export default new Controller();

@@ -14,6 +14,10 @@ class Repository {
             where: { id }
         })
     }
+
+    public collab(){
+        return DataSource.collab.findFirst();
+    }
 }
 
 export default new Repository();
