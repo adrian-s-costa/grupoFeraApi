@@ -100,6 +100,11 @@ class Controller {
     return res.status(200).json(result)
   }
 
+  public async getCampaignsByDealership(req: Request, res: Response) {
+    const result = await Service.getCampaignsByDealership(req.params.id);
+    return res.status(200).json(result)
+  }
+
   public async getCampaigns(req: Request, res: Response) {
     const result = await Service.getCampaigns();
     return res.status(200).json(result)

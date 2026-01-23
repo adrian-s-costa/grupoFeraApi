@@ -34,6 +34,12 @@ router
 )
 
 router
+.route('/home/campaigns/dealership/:id')
+.get(
+  videosController.getCampaignsByDealership
+)
+
+router
 .route('/home/campaigns')
 .get(
   videosController.getCampaigns

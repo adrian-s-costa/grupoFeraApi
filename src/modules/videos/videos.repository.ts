@@ -305,6 +305,12 @@ class Repository {
     })
   }
 
+  public getCampaignByDealershipId(dealershipId: string) {
+    return DataSource.campaigns.findMany({
+      where: { dealershipId: dealershipId },
+    })
+  }
+
   public async getVideoHome(){
     return await DataSource.videoHome.findMany()
   }

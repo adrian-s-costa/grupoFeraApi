@@ -328,6 +328,11 @@ class Service {
     return course;
   }
 
+  public async getCampaignsByDealership(dealershipId: string){
+    const campaign = await Repository.getCampaignByDealershipId(dealershipId);
+    return campaign;
+  }
+
   // public async createOne(data: CreateVideosDto) {
   //   return await Repository.createOne(data);
   // }
