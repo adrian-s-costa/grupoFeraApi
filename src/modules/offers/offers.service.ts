@@ -31,6 +31,8 @@ class Service {
     }
 
     public async verifyNotification(location: { lat: number; long: number }, userId: string) {
+
+        console.log("passei por aqui", location, userId);
         
         const closeValue = 0.5; // distância em KM considerada "próxima"
         const dealerships = await Repository.getDealerships();
