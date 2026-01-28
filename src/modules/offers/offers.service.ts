@@ -49,6 +49,8 @@ class Service {
 
         placesWithDistance.map(async (place)=>{
             console.log(place.distanceKm);
+            console.log(process.env.ONE_SIGNAL_API_KEY);
+            
             if (place.distanceKm <= closeValue){
                 try {
                     await fetch(
@@ -56,7 +58,7 @@ class Service {
                         {
                             method: "POST",
                             headers: {
-                                Authorization: `Basic os_v2_app_hivd2zqryfgihidb753idxct2qbbw47xvjievi4mbcqga4d3ru5gr33c5qj2k2xchr5qsp6xp4dmgqtjxmcdlfixir7qf3kf6olgeda`,
+                                Authorization: `Basic ${process.env.ONE_SIGNAL_API_KEY}`,
                                 "Content-Type": "application/json"
                             },
                             body: JSON.stringify({
