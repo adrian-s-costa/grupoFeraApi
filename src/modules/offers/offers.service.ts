@@ -49,7 +49,7 @@ class Service {
 
         placesWithDistance.map(async (place)=>{
             console.log(place.distanceKm);
-            console.log(process.env.ONE_SIGNAL_API_KEY);
+            console.log(process.env.ONE_SIGNAL_API_KEY)
             
             if (place.distanceKm <= closeValue){
                 try {
