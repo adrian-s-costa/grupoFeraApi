@@ -50,8 +50,8 @@ class Service {
         }));
 
         placesWithDistance.map(async (place)=>{
+            console.log(place.distanceKm);
             if (place.distanceKm <= closeValue){
-                console.log(place.distanceKm);
                 try {
                     await fetch(
                         "https://onesignal.com/api/v1/notifications",
