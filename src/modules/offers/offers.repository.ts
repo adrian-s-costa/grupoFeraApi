@@ -8,7 +8,6 @@ class Repository {
         return this.repository.findMany()
     }
 
-
     public getDealershipById(id: any){
         return this.repository.findUnique({
             where: { id }

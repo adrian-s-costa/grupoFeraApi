@@ -12,6 +12,12 @@ router
 )
 
 router
+.route('/notification')
+.post(
+  Controller.verifyNotification,
+)
+
+router
 .route('/:id')
 .get(
   Controller.findOne,

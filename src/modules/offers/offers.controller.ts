@@ -7,6 +7,11 @@ class Controller {
         res.status(200).json(result);
     }
 
+    public async verifyNotification(req: Request, res: Response) {
+        const result = await Service.verifyNotification(req.body.loc, req.body.userId);
+        res.status(200).json(result);
+    }
+
     public async findOne(req: Request, res: Response) {
         const result = await Service.findById(req.params.id);
         res.status(200).json(result);
