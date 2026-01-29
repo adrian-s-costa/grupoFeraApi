@@ -309,3 +309,16 @@ type Coordinates {
   lng Float
 }
 
+model NotificationLog {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  dealershipId  String
+  lastSentAt    DateTime
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, dealershipId])
+  @@index([userId])
+  @@index([dealershipId])
+}

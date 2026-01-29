@@ -50,33 +50,38 @@ class Service {
         placesWithDistance.map(async (place)=>{
             console.log(place.distanceKm);
             console.log(process.env.ONE_SIGNAL_API_KEY)
-            
-            if (place.distanceKm <= closeValue){
-                try {
-                    await fetch(
-                        "https://onesignal.com/api/v1/notifications",
-                        {
-                            method: "POST",
-                            headers: {
-                                Authorization: `Basic ${process.env.ONE_SIGNAL_API_KEY}`,
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                app_id: "3a2a3d66-11c1-4c83-a061-ff7681dc53d4",
-                                include_external_user_ids: [userId],
-                                contents: {
-                                    "pt-BR": `Teste de mensage ${place.name}`,
-                                    "en": `Test message ${place.name}`
-                                }
-                            })
-                        }
-                    );
 
-                    return { status: "OK", message: "enviada" };
-                } catch (err) {
-                    console.error(err);
-                    return { error: "Erro ao enviar notificação" };
+            const log = await Repository.getNotificationLog(userId, place.id);
+
+            if (!log || !this.isSameDay(log.lastSentAt, new Date())) {
+                
+                if (place.distanceKm <= closeValue){
+                    try {
+                        await fetch(
+                            "https://onesignal.com/api/v1/notifications",
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Basic ${process.env.ONE_SIGNAL_API_KEY}`,
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    app_id: "3a2a3d66-11c1-4c83-a061-ff7681dc53d4",
+                                    include_external_user_ids: [userId],
+                                    contents: {
+                                        "pt-BR": `Teste de mensage ${place.name}`,
+                                        "en": `Test message ${place.name}`
+                                    }
+                                })
+                            }
+                        );
+                        return { status: "OK", message: "enviada" };
+                    } catch (err) {
+                        console.error(err);
+                        return { error: "Erro ao enviar notificação" };
+                    }
                 }
+                await Repository.upsertNotificationLog(userId, place.id);
             }
         })
     }
@@ -88,6 +93,15 @@ class Service {
     public async collab() {
         return await Repository.collab();
     }
+
+    private isSameDay(a: Date, b: Date) {
+        return (
+            a.getUTCFullYear() === b.getUTCFullYear() &&
+            a.getUTCMonth() === b.getUTCMonth() &&
+            a.getUTCDate() === b.getUTCDate()
+        );
+    }
+
 }
 
 export default new Service();
