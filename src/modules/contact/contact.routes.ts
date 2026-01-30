@@ -1,15 +1,14 @@
 import { Router } from 'express';
 
-import Controller from './contact.controller';
-import Validator from './contact.validator';
+import Controller from '../offers/offers.controller';
+
 
 const router = Router();
 
 router
 .route('/')
-.post(
-  Validator.sendContactEmail,
-  Controller.sendContactEmail,
-);
+.get(Controller.collab);
+
+
 
 export default router;

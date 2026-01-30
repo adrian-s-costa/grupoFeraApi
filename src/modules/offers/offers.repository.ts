@@ -1,5 +1,5 @@
-import DataSource from '@database/data-source';
 import { Prisma } from '@prisma/client';
+import DataSource from '@database/data-source';
 
 class Repository {
   constructor(private readonly repository = DataSource.dealership) {}
@@ -14,8 +14,8 @@ class Repository {
         })
     }
 
-    public collab(){
-        return DataSource.collab.findFirst();
+    public async collab(){
+        return await DataSource.collab.findFirst();
     }
 
     public async getNotificationLog(userId: string, dealershipId: string) {
