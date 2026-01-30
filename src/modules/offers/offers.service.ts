@@ -26,6 +26,8 @@ function distanceInKm(
 
 class Service {    
     public async findAll(lat: string, lng: string) {
+        console.log(lat, lng);
+    
         const dealerships = await Repository.getDealerships();
 
         if(!lat || !lng){
