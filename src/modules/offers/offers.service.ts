@@ -75,13 +75,13 @@ class Service {
                                 })
                             }
                         );
+                        await Repository.upsertNotificationLog(userId, place.id);
                         return { status: "OK", message: "enviada" };
                     } catch (err) {
                         console.error(err);
                         return { error: "Erro ao enviar notificação" };
                     }
                 }
-                await Repository.upsertNotificationLog(userId, place.id);
             }
         })
     }
