@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 class Controller {
     public async findAll(req: Request, res: Response) {
-        const result = await Service.findAll();
+        const result = await Service.findAll(req.params.lat, req.params.lng);
         res.status(200).json(result);
     }
 

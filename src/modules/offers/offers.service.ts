@@ -25,9 +25,24 @@ function distanceInKm(
 }
 
 class Service {    
-    public async findAll() {
+    public async findAll(lat: string, lng: string) {
         const dealerships = await Repository.getDealerships();
-        return dealerships;
+
+        const placesWithDistance = dealerships
+        .map(dealership => ({
+            ...dealership,
+            distanceKm: Number(
+            distanceInKm(
+                parseFloat(lat),
+                parseFloat(lng),
+                dealership.coordinates.lat,
+                dealership.coordinates.lng
+            )
+            )
+        }))
+        .sort((a, b) => a.distanceKm - b.distanceKm);
+
+        return placesWithDistance;
     }
 
     public async verifyNotification(location: { lat: number; long: number }, userId: string) {
@@ -48,9 +63,6 @@ class Service {
         }));
 
         placesWithDistance.map(async (place)=>{
-            console.log(place.distanceKm);
-            console.log(process.env.ONE_SIGNAL_API_KEY)
-
             const log = await Repository.getNotificationLog(userId, place.id);
 
             if (!log || !this.isSameDay(log.lastSentAt, new Date())) {
