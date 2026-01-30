@@ -1,6 +1,5 @@
+import { config } from 'dotenv';
 import Repository from './offers.repository';
-
-type Location = { lat: number; long: number };
 
 function distanceInKm(
   lat1: number,
@@ -8,80 +7,101 @@ function distanceInKm(
   lat2: number,
   lon2: number
 ): number {
-  const R = 6371;
+  const R = 6371; // raio da Terra em KM
+
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
 
   const a =
-    Math.sin(dLat / 2) ** 2 +
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(lat1 * Math.PI / 180) *
-    Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) ** 2;
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
   return R * c;
 }
 
-class Service {
-
-  public async verifyNotification(location: Location, userId: string) {
-    const closeValueKm = 0.5;
-    const dealerships = await Repository.getDealerships();
-
-    for (const dealership of dealerships) {
-      const distanceKm = distanceInKm(
-        location.lat,
-        location.long,
-        dealership.coordinates.lat,
-        dealership.coordinates.lng
-      );
-
-      if (distanceKm > closeValueKm) continue;
-
-      const log = await Repository.getNotificationLog(userId, dealership.id);
-
-      if (log && this.isSameDay(log.lastSentAt, new Date())) {
-        continue;
-      }
-
-      try {
-        await fetch("https://onesignal.com/api/v1/notifications", {
-          method: "POST",
-          headers: {
-            Authorization: `Basic ${process.env.ONE_SIGNAL_API_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            app_id: process.env.ONE_SIGNAL_APP_ID,
-            include_external_user_ids: [userId],
-            contents: {
-              "pt-BR": `Você está perto da ${dealership.name}`,
-              "en": `You're near ${dealership.name}`
-            }
-          })
-        });
-
-        await Repository.upsertNotificationLog(userId, dealership.id);
-
-        // ⛔ envia só UMA notificação por request
-        return { status: "OK", dealership: dealership.name };
-
-      } catch (err) {
-        console.error("Erro OneSignal:", err);
-        return { error: "Erro ao enviar notificação" };
-      }
+class Service {    
+    public async findAll() {
+        const dealerships = await Repository.getDealerships();
+        return dealerships;
     }
 
-    return { status: "NO_ACTION" };
-  }
+    public async verifyNotification(location: { lat: number; long: number }, userId: string) {
+        
+        const closeValue = 0.5; // distância em KM considerada "próxima"
+        const dealerships = await Repository.getDealerships();
 
-  private isSameDay(a: Date, b: Date) {
-    return (
-      a.getUTCFullYear() === b.getUTCFullYear() &&
-      a.getUTCMonth() === b.getUTCMonth() &&
-      a.getUTCDate() === b.getUTCDate()
-    );
-  }
+        const placesWithDistance = dealerships.map(dealership => ({
+        ...dealership,
+        distanceKm: Number(
+            distanceInKm(
+                location.lat,
+                location.long,
+                dealership.coordinates.lat,
+                dealership.coordinates.lng
+            ).toFixed(2)
+        )
+        }));
+
+        placesWithDistance.map(async (place)=>{
+            console.log(place.distanceKm);
+            console.log(process.env.ONE_SIGNAL_API_KEY)
+
+            const log = await Repository.getNotificationLog(userId, place.id);
+
+            if (!log || !this.isSameDay(log.lastSentAt, new Date())) {
+                
+                if (place.distanceKm <= closeValue){
+                    try {
+                        await fetch(
+                            "https://onesignal.com/api/v1/notifications",
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Basic ${process.env.ONE_SIGNAL_API_KEY}`,
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    app_id: "3a2a3d66-11c1-4c83-a061-ff7681dc53d4",
+                                    include_external_user_ids: [userId],
+                                    contents: {
+                                        "pt-BR": `Teste de mensage ${place.name}`,
+                                        "en": `Test message ${place.name}`
+                                    }
+                                })
+                            }
+                        );
+                        await Repository.upsertNotificationLog(userId, place.id);
+                        return { status: "OK", message: "enviada" };
+                    } catch (err) {
+                        console.error(err);
+                        return { error: "Erro ao enviar notificação" };
+                    }
+                }
+            }
+        })
+    }
+
+    public async findById(id: string) {
+        return await Repository.getDealershipById(id);
+    }
+
+    public async collab() {
+        return await Repository.collab();
+    }
+
+    private isSameDay(a: Date, b: Date) {
+        return (
+            a.getUTCFullYear() === b.getUTCFullYear() &&
+            a.getUTCMonth() === b.getUTCMonth() &&
+            a.getUTCDate() === b.getUTCDate()
+        );
+    }
+
 }
 
 export default new Service();
