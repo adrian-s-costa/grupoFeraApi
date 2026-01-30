@@ -6,7 +6,7 @@ import Controller from './offers.controller';
 const router = Router();
 
 router
-.route('/:lat&:lng')
+.route('/')
 .get(
   Controller.findAll,
 )
