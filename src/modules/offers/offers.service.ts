@@ -28,6 +28,10 @@ class Service {
     public async findAll(lat: string, lng: string) {
         const dealerships = await Repository.getDealerships();
 
+        if(!lat || !lng){
+            return dealerships;
+        }
+
         const placesWithDistance = dealerships
         .map(dealership => ({
             ...dealership,
