@@ -25,17 +25,8 @@ function distanceInKm(
 }
 
 class Service {    
-    public async findAll(lat?: string, lng?: string, storeCode?: string) {    
+    public async findAll(lat?: string, lng?: string) {    
         const dealerships = await Repository.getDealerships();
-
-        if((!lat || !lng) && !storeCode || storeCode == '' || storeCode == undefined  || storeCode == null){
-            return [];
-        }
-
-        if(storeCode){
-            const store = dealerships.filter(dealership => dealership.storeCode === storeCode);
-            return store ?? []
-        }
 
         const placesWithDistance = dealerships
         .map(dealership => ({
@@ -52,6 +43,12 @@ class Service {
         .sort((a, b) => a.distanceKm - b.distanceKm);
 
         return placesWithDistance;
+    }
+
+    public async findByCode(storeCode?: string) {    
+        const dealerships = await Repository.getDealerships();
+        const stores = dealerships.filter(dealership => dealership.storeCode === storeCode);
+        return stores ?? []
     }
 
     public async verifyNotification(location: { lat: number; long: number }, userId: string) {

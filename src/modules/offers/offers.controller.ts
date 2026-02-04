@@ -4,7 +4,15 @@ import { Request, Response } from 'express';
 class Controller {
     public async findAll(req: Request, res: Response) {
         const { lat, lng, storeCode } = req.query;
-        const result = await Service.findAll(lat as string, lng as string, storeCode as string);
+
+        if(storeCode){
+            const result = await Service.findByCode(storeCode as string);
+            res.status(200).json(result);
+            return;
+        }
+
+        const result = await Service.findAll(lat as string, lng as string);
+        
         res.status(200).json(result);
     }
 
