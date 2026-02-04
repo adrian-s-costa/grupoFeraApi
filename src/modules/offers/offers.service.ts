@@ -28,8 +28,8 @@ class Service {
     public async findAll(lat?: string, lng?: string, storeCode?: string) {    
         const dealerships = await Repository.getDealerships();
 
-        if((!lat || !lng) && !storeCode){
-            return dealerships;
+        if((!lat || !lng) && !storeCode || storeCode == '' || storeCode == undefined  || storeCode == null){
+            return [];
         }
 
         if(storeCode){
