@@ -25,11 +25,16 @@ function distanceInKm(
 }
 
 class Service {    
-    public async findAll(lat?: string, lng?: string) {    
+    public async findAll(lat?: string, lng?: string, storeCode?: string) {    
         const dealerships = await Repository.getDealerships();
 
-        if(!lat || !lng){
+        if((!lat || !lng) && !storeCode){
             return dealerships;
+        }
+
+        if(storeCode){
+            const store = dealerships.filter(dealership => dealership.storeCode === storeCode);
+            return store ?? []
         }
 
         const placesWithDistance = dealerships
@@ -37,8 +42,8 @@ class Service {
             ...dealership,
             distanceKm: Number(
             distanceInKm(
-                parseFloat(lat),
-                parseFloat(lng),
+                parseFloat(lat!),
+                parseFloat(lng!),
                 dealership.coordinates.lat,
                 dealership.coordinates.lng
             )

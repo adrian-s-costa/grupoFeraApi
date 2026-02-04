@@ -294,6 +294,7 @@ model Dealership {
   image       String
   rating      Float
   reviews     Int
+  storeCode   String?
   coordinates Coordinates
 }
 
