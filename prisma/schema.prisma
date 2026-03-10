@@ -323,3 +323,14 @@ model NotificationLog {
   @@index([userId])
   @@index([dealershipId])
 }
+
+model Coupon {
+  id                    String          @id @default(auto()) @map("_id") @db.ObjectId
+  value                 String?
+  emailOwner            String?
+  pixKey                String
+  discountPercentage    String?
+  userId                String?
+  validity              DateTime?
+  isValid               Boolean?
+}

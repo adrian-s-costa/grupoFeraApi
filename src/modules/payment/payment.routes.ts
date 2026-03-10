@@ -35,4 +35,16 @@ router
   Controller.saveSubs,
 )
 
+router
+.route('/preapproval')
+.post(
+  Controller.createPreapproval,
+)
+
+router
+.route('/alamo')
+.post(
+  Controller.createPreapproval,
+)
+
 export default router;

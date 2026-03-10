@@ -1,4 +1,4 @@
-import { MercadoPagoConfig, Payment, Preference } from 'mercadopago';
+import { MercadoPagoConfig, Payment, PreApproval, PreApprovalPlan, Preference } from 'mercadopago';
 import Repository from "./payment.repository"
 
 
@@ -65,6 +65,67 @@ class Service {
             }
         })
     }
+
+    public async createPreapproval(req: any) {
+        const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
+        const preapproval = new PreApproval(client);
+        
+        const { plan, amount, email, userId } = req.body;
+
+        const number = `Nº ${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+        try {
+            const res = await preapproval.create({
+                
+                body: {
+                    reason: plan + " - " + number,
+                    payer_email: email,
+                    auto_recurring: {
+                        frequency: 1,
+                        frequency_type: "months",
+                        transaction_amount: amount,
+                        currency_id: "BRL"
+                    },
+                    external_reference: email,
+                    back_url: "https://grupofera.com/curso-gratis",
+                }
+            })
+            await this.updateUserWithApprovalInfo(res.id);
+
+            return res.init_point;
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    public async updateUserWithApprovalInfo(id: any) {     
+        const url = `https://api.mercadopago.com/preapproval/${id}`;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.MP_ACCESS_TOKEN!}`
+            }
+        })
+        .then(response => response.json())
+        .then(async data => {
+            Repository.updateOne(
+                data.external_reference,
+                {
+                    lastPaymentStaus: data.status,
+                    lastPaymentId: data.id.toString()
+                }
+            )
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+    }
+
 }
+
+
 
 export default new Service();

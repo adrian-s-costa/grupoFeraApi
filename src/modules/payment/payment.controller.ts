@@ -14,6 +14,12 @@ class Controller {
       res.status(200).json(result);
     }
 
+    public async createPreapproval(req: Request, res: Response) {
+      console.log("A");
+      const result = await Service.createPreapproval(req);
+      res.status(200).json(result);
+    }
+
     public async webhook(req: Request, res: Response) {
       console.log(req.body);
       await Service.updateUserWithPaymentInfo(req)

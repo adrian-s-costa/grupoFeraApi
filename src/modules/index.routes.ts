@@ -30,4 +30,5 @@ router.use('/tvmax', tvMaxRouter);
 router.use('/videoHome', videoRouter);
 router.use('/offers', offersRouter);
 
+
 export default router;
