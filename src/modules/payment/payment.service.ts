@@ -19,7 +19,7 @@ class Service {
     }
 
     public async updateUserWithPaymentInfo(req: any) {     
-        const url = `https://api.mercadopago.com/v1/payments/${req.body.data.id}`;
+        const url = `https://api.mercadopago.com/v1/preapproval/${req.body.data.id}`;
 
       fetch(url, {
         method: 'GET',
@@ -92,7 +92,7 @@ class Service {
             })
             await this.updateUserWithApprovalInfo(res.id);
 
-            return res.init_point;
+            return { link: res.init_point};
 
         } catch (error) {
             console.log(error);
