@@ -66,41 +66,59 @@ class Service {
         })
     }
 
-    public async createPreapproval(req: any) {
-        const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
-        const preapproval = new PreApproval(client);
+    public async createPreapproval(req: any, res: any) {
+        //const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN! });
+        //const preapproval = new PreApproval(client);
         
-        const { plan, amount, email, userId } = req.body;
+        const { amount, planName, payer, token } = req.body;
 
-        const number = `Nº ${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+        if (!amount || Number(amount) <= 0) {
+            return res.json(
+                { message: "Valor inválido para assinatura" },
+                { status: 400 }
+            );
+        }
 
         try {
-            const res = await preapproval.create({
-                
-                body: {
-                    reason: plan + " - " + number,
-                    payer_email: email,
+            const mpResponse = await fetch("https://api.mercadopago.com/preapproval", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}`,
+                },
+                body: JSON.stringify({
+                    reason: "Plano Premium",
+                    payer_email: payer?.email,
+                    card_token_id: token,
                     auto_recurring: {
                         frequency: 1,
                         frequency_type: "months",
-                        transaction_amount: amount,
-                        currency_id: "BRL"
+                        transaction_amount: Number(amount),
+                        currency_id: "BRL",
                     },
-                    external_reference: email,
-                    back_url: "https://grupofera.com/curso-gratis",
-                }
-            })
-            await this.updateUserWithApprovalInfo(res.id);
+                    status: "authorized",
+                    external_reference: payer?.email,
+                }),
+            });
 
-            return { link: res.init_point};
+            const result = await mpResponse.json();
 
+            if (!mpResponse.ok) {
+                return res.status(mpResponse.status).json(result);
+            }
+
+            return res.json(result);
         } catch (error) {
-            console.log(error);
+            return res.status(500).json({
+                message: "Erro interno ao criar assinatura",
+            });
         }
+
     }
 
-    public async updateUserWithApprovalInfo(id: any) {     
-        const url = `https://api.mercadopago.com/preapproval/${id}`;
+    public async updateUserWithApprovalInfo(req: any) {   
+        console.log(req);
+        const url = `https://api.mercadopago.com/v1/payments/${req.body.data.id}`;
 
         fetch(url, {
             method: 'GET',
@@ -111,8 +129,11 @@ class Service {
         })
         .then(response => response.json())
         .then(async data => {
+
+            const decodedData = this.decodeObject(data.external_reference);
+
             Repository.updateOne(
-                data.external_reference,
+                decodedData.id,
                 {
                     lastPaymentStaus: data.status,
                     lastPaymentId: data.id.toString()
@@ -122,6 +143,11 @@ class Service {
         .catch(error => {
             console.error('Erro:', error);
         });
+    }
+
+    public decodeObject<T = any>(encoded: string): T {
+        const json = Buffer.from(encoded, "base64").toString("utf8");
+        return JSON.parse(json) as T;
     }
 
 }

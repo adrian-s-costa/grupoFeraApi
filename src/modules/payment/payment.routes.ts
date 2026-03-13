@@ -20,7 +20,7 @@ router
 router
 .route('/teste')
 .post(
-  Controller.webhook,
+  Controller.webhookPreapproval,
 )
 
 router

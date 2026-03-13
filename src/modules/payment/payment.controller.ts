@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import Service from "./payment.service"
+import { MercadoPagoController } from './paymentAlternative.service';
 const webpush = require('web-push');
 import 'dotenv/config';
+
+const controller = new MercadoPagoController();
 
 class Controller { 
     public async createPayment(req: Request, res: Response) {
@@ -15,14 +18,22 @@ class Controller {
     }
 
     public async createPreapproval(req: Request, res: Response) {
-      console.log("A");
-      const result = await Service.createPreapproval(req);
-      res.status(200).json(result);
+      const result = await controller.createPreapproval(req, res);
+      return result;
     }
 
     public async webhook(req: Request, res: Response) {
       console.log(req.body);
       await Service.updateUserWithPaymentInfo(req)
+      
+      return res.status(200).json({
+        status: "OK"
+      });
+    }
+
+    public async webhookPreapproval(req: Request, res: Response) {
+      console.log(req.body);
+      await Service.updateUserWithApprovalInfo(req)
       
       return res.status(200).json({
         status: "OK"

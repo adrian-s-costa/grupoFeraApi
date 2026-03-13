@@ -13,6 +13,7 @@ import PaymentRouter from './payment/payment.routes'
 import tvMaxRouter from './videos/tvMax.routes'
 import videoRouter from './videos/videoHome.routes'
 import offersRouter from './offers/offers.routes'
+import BrandRoutes from './brand/brand.routes'
 
 const router = Router();
 
@@ -29,6 +30,7 @@ router.use('/process_payment', PaymentRouter);
 router.use('/tvmax', tvMaxRouter);
 router.use('/videoHome', videoRouter);
 router.use('/offers', offersRouter);
+router.use('/brands', BrandRoutes);
 
 
 export default router;

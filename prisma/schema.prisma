@@ -295,6 +295,8 @@ model Dealership {
   rating      Float
   reviews     Int
   storeCode   String?
+  brandId     String?
+  userId      String?
   coordinates Coordinates
 }
 
@@ -333,4 +335,11 @@ model Coupon {
   userId                String?
   validity              DateTime?
   isValid               Boolean?
+}
+
+model Brand {
+  id                    String          @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String?
+  emailOwner            String?
+  userId                String?
 }

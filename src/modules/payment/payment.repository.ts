@@ -5,9 +5,9 @@ import { Prisma } from '@prisma/client';
 class Repository {
   constructor(private readonly repository = DataSource.user) {}
 
-  public async updateOne(email: string, data: Prisma.UserUpdateInput) {
+  public async updateOne(id: string, data: Prisma.UserUpdateInput) {
     const a = await this.repository.update({
-      where: { email },
+      where: { id },
       data,
     });
     return a;
