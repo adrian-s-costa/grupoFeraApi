@@ -33,7 +33,7 @@ class Service {
             Repository.updateOne(
                 data.additional_info.payer.first_name,
                 {
-                    lastPaymentStaus: data.status,
+                    lastPaymentStatus: data.status,
                     lastPaymentId: data.id.toString()
                 }
             )
@@ -135,7 +135,7 @@ class Service {
             Repository.updateOne(
                 decodedData.id,
                 {
-                    lastPaymentStaus: data.status,
+                    lastPaymentStatus: data.status,
                     lastPaymentId: data.id.toString()
                 }
             )
