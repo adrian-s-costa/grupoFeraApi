@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import Repository from "./payment.repository"
 
 type CreatePreapprovalBody = {
   amount: number;
@@ -6,10 +7,19 @@ type CreatePreapprovalBody = {
   formData?: any;
   cupom?: string;
   id?: string;
+  deviceId?: string;
 };
 
 export class MercadoPagoController {
   private readonly baseUrl = "https://api.mercadopago.com";
+
+  private headersOther(deviceId: string) {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}`,
+      "X-Device-Id": deviceId,
+    };
+  }
 
   private get headers() {
     return {
@@ -24,7 +34,8 @@ export class MercadoPagoController {
       planName,
       formData,
       cupom,
-      id
+      id,
+      deviceId
     } = req.body as CreatePreapprovalBody;
 
     console.log("createPreapproval called with:", req.body);
@@ -55,7 +66,7 @@ export class MercadoPagoController {
     try {
       const mpResponse = await fetch(`${this.baseUrl}/preapproval`, {
         method: "POST",
-        headers: this.headers,
+        headers: this.headersOther(deviceId!),
         body: JSON.stringify({
           reason: planName || "Assinatura",
           payer_email: formData.payer.email,
@@ -89,6 +100,14 @@ export class MercadoPagoController {
       // externalReference
       // payerEmail
       // amount
+
+      Repository.updateOne(
+        id!,
+        {
+          lastPaymentStatus: 'waiting_payment',
+          lastPaymentId: '',
+        }
+      );
 
       return res.status(201).json({
         message: "Assinatura criada com sucesso",
