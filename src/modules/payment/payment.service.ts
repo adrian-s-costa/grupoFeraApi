@@ -1,5 +1,6 @@
 import { MercadoPagoConfig, Payment, PreApproval, PreApprovalPlan, Preference } from 'mercadopago';
 import Repository from "./payment.repository"
+import DataSource from '@database/data-source';
 
 
 class Service {
@@ -139,9 +140,30 @@ class Service {
                     lastPaymentId: data.id.toString()
                 }
             )
+
+            // Se houver cupom no pagamento, registrar o uso
+            if (decodedData.cupom) {
+                const coupon = await this.getCouponByName(decodedData.cupom);
+                if (coupon) {
+                    await DataSource.couponUsage.create({
+                        data: {
+                            cupomId: coupon.id,
+                            data: new Date()
+                        }
+                    });
+                }
+            }
         })
         .catch(error => {
             console.error('Erro:', error);
+        });
+    }
+
+    public async getCouponByName(couponName: string) {
+        return await DataSource.coupon.findFirst({
+            where: {
+                value: couponName
+            }
         });
     }
 

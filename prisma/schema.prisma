@@ -335,6 +335,14 @@ model Coupon {
   userId                String?
   validity              DateTime?
   isValid               Boolean?
+  couponUsages          CouponUsage[]
+}
+
+model CouponUsage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  cupomId   String   @db.ObjectId
+  data      DateTime @default(now())
+  coupon    Coupon?  @relation(fields: [cupomId], references: [id])
 }
 
 model Brand {

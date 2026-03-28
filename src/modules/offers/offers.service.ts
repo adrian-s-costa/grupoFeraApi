@@ -40,7 +40,10 @@ class Service {
             )
             )
         }))
+        
         .sort((a, b) => a.distanceKm - b.distanceKm);
+
+        console.log(placesWithDistance);
 
         return placesWithDistance;
     }
@@ -87,7 +90,7 @@ class Service {
                                     app_id: "3a2a3d66-11c1-4c83-a061-ff7681dc53d4",
                                     include_external_user_ids: [userId],
                                     contents: {
-                                        "pt-BR": `Teste de mensage ${place.name}`,
+                                        "pt-BR": `Teste de mensagem ${place.name}`,
                                         "en": `Test message ${place.name}`
                                     }
                                 })
