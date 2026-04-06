@@ -15,6 +15,7 @@ import videoRouter from './videos/videoHome.routes'
 import offersRouter from './offers/offers.routes'
 import BrandRoutes from './brand/brand.routes'
 import DealershipRoutes from './dealership/dealership.routes'
+import CouponRoutes from './coupon/coupon.routes'
 
 const router = Router();
 
@@ -33,6 +34,7 @@ router.use('/videoHome', videoRouter);
 router.use('/offers', offersRouter);
 router.use('/brands', BrandRoutes);
 router.use('/dealerships', DealershipRoutes);
+router.use('/coupons', CouponRoutes);
 
 
 export default router;
