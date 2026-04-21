@@ -1,0 +1,20 @@
+paths:
+  /tvmax:
+    get:
+      summary: 'Rota utilizada para listar shows do TV Max'
+      tags:
+        - TV Max
+      responses:
+        '200':
+          description: 'OK'
+
+  /tvmax/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Rota utilizada para exibir um show do TV Max'
+      tags:
+        - TV Max
+      responses:
+        '200':
+          description: 'OK'

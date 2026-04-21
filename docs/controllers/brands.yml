@@ -1,0 +1,18 @@
+paths:
+  /brands/search:
+    get:
+      summary: 'Rota utilizada para buscar marcas por nome'
+      tags:
+        - Marcas
+      responses:
+        '200':
+          description: 'OK'
+
+  /brands:
+    post:
+      summary: 'Rota utilizada para criar uma marca'
+      tags:
+        - Marcas
+      responses:
+        '201':
+          description: 'Created'

@@ -1,0 +1,27 @@
+paths:
+  /dealerships:
+    get:
+      summary: 'Rota utilizada para listar concessionárias'
+      tags:
+        - Concessionárias
+      responses:
+        '200':
+          description: 'OK'
+    post:
+      summary: 'Rota utilizada para criar uma concessionária'
+      tags:
+        - Concessionárias
+      responses:
+        '201':
+          description: 'Created'
+
+  /dealerships/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Rota utilizada para exibir uma concessionária'
+      tags:
+        - Concessionárias
+      responses:
+        '200':
+          description: 'OK'

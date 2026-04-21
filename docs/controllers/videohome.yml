@@ -1,0 +1,9 @@
+paths:
+  /videoHome:
+    get:
+      summary: 'Rota utilizada para obter vídeos da home'
+      tags:
+        - Vídeos Home
+      responses:
+        '200':
+          description: 'OK'

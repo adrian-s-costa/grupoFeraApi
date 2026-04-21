@@ -1,0 +1,37 @@
+paths:
+  /courses:
+    get:
+      summary: 'Rota utilizada para listar cursos'
+      tags:
+        - Cursos
+      responses:
+        '200':
+          description: 'OK'
+
+  /courses/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Rota utilizada para exibir um curso'
+      tags:
+        - Cursos
+      responses:
+        '200':
+          description: 'OK'
+
+  /courses/{id}/comment:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    post:
+      summary: 'Rota utilizada para postar comentário em um curso'
+      tags:
+        - Cursos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentSchema'
+      responses:
+        '201':
+          description: 'Created'

@@ -1,0 +1,63 @@
+paths:
+  /process_payment:
+    post:
+      summary: 'Rota utilizada para criar pagamento'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'
+
+  /process_payment/preference:
+    post:
+      summary: 'Rota utilizada para criar preferência de pagamento'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'
+
+  /process_payment/teste:
+    post:
+      summary: 'Rota de teste para webhook'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'
+
+  /process_payment/push:
+    post:
+      summary: 'Rota para push de pagamento'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'
+
+  /process_payment/save-sub:
+    post:
+      summary: 'Rota para salvar assinatura'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'
+
+  /process_payment/preapproval:
+    post:
+      summary: 'Rota para criar pré-aprovação'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'
+
+  /process_payment/alamo:
+    post:
+      summary: 'Rota para pré-aprovação Alamo'
+      tags:
+        - Pagamentos
+      responses:
+        '200':
+          description: 'OK'

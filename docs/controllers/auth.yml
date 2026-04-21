@@ -120,3 +120,185 @@ paths:
                 $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Senha atualizada com sucesso!'
+
+  /auth/google:
+    post:
+      summary: 'Login with Google'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserSchema'
+
+  /auth/google/alt:
+    get:
+      summary: 'Alternative Google login'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK
+
+  /auth/google/native:
+    post:
+      summary: 'Native Google login'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserSchema'
+
+  /auth/google/register-native:
+    post:
+      summary: 'Register with Google native'
+      tags:
+        - User - Autenticação
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserSchema'
+
+  /auth/google/callback:
+    get:
+      summary: 'Google callback'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK
+
+  /auth/forgot-google:
+    post:
+      summary: 'Forgot password for Google user'
+      tags:
+        - User - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordUserSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessSchema'
+
+  /auth/check-code:
+    post:
+      summary: 'Check code'
+      tags:
+        - User - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckCodeSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessSchema'
+
+  /auth/update-user:
+    post:
+      summary: 'Update user data'
+      tags:
+        - User - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserSchema'
+
+  /auth/delete-user:
+    post:
+      summary: 'Delete user'
+      tags:
+        - User - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteUserSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessSchema'
+
+  /auth/get-user/{email}:
+    parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: 'Get user by email'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUserSchema'
+
+  /auth/get-document/{email}:
+    parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: 'Get document by email'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK
+
+  /auth/club/smartlink/{initials}:
+    parameters:
+      - name: initials
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: 'Get smartlink by initials'
+      tags:
+        - User - Autenticação
+      responses:
+        '200':
+          description: OK

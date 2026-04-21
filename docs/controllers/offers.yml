@@ -1,0 +1,38 @@
+paths:
+  /offers:
+    get:
+      summary: 'Rota utilizada para listar ofertas'
+      tags:
+        - Ofertas
+      responses:
+        '200':
+          description: 'OK'
+
+  /offers/notification:
+    post:
+      summary: 'Rota utilizada para verificar notificação de oferta'
+      tags:
+        - Ofertas
+      responses:
+        '200':
+          description: 'OK'
+
+  /offers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Rota utilizada para exibir uma oferta'
+      tags:
+        - Ofertas
+      responses:
+        '200':
+          description: 'OK'
+
+  /offers/collabs:
+    get:
+      summary: 'Rota utilizada para listar colaborações de ofertas'
+      tags:
+        - Ofertas
+      responses:
+        '200':
+          description: 'OK'

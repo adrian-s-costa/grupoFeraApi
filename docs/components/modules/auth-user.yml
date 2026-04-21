@@ -63,3 +63,55 @@ components:
           type: string
           required: true
           example: '12345789'
+
+    CheckCodeSchema:
+      type: object
+      properties:
+        code:
+          type: string
+          example: '1234'
+        credential:
+          type: string
+          example: 'user@email.com'
+
+    UpdateUserSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1'
+        name:
+          type: string
+          example: 'User Name'
+        secName:
+          type: string
+          example: 'User SecName'
+        tel:
+          type: string
+          example: '123456789'
+        bornDate:
+          type: string
+          example: '1990-01-01'
+        cep:
+          type: string
+          example: '12345678'
+        localidade:
+          type: string
+          example: 'City'
+        uf:
+          type: string
+          example: 'SP'
+        pfpUrl:
+          type: string
+          nullable: true
+          example: 'http://example.com/pfp.jpg'
+
+    DeleteUserSchema:
+      type: object
+      properties:
+        credential:
+          type: string
+          example: 'user@email.com'
+        initials:
+          type: string
+          example: 'ABC'

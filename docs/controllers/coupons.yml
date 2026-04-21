@@ -1,0 +1,68 @@
+paths:
+  /coupons:
+    get:
+      summary: 'Rota utilizada para listar cupons'
+      tags:
+        - Cupons
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/SearchParameter'
+        - $ref: '#/components/parameters/PageParameter'
+        - $ref: '#/components/parameters/SizeParameter'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CouponSchema'
+                  - $ref: '#/components/schemas/PaginationSchema'
+    post:
+      summary: 'Rota utilizada para criar um cupom'
+      tags:
+        - Cupons
+      security:
+        - BearerAuth: []
+      responses:
+        '201':
+          description: 'Created'
+
+  /coupons/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Rota utilizada para exibir um cupom'
+      tags:
+        - Cupons
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CouponSchema'
+    put:
+      summary: 'Rota utilizada para editar um cupom'
+      tags:
+        - Cupons
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+    delete:
+      summary: 'Rota utilizada para deletar um cupom'
+      tags:
+        - Cupons
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
